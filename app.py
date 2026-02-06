@@ -1,9 +1,11 @@
 from flask import Flask
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object('config.Config')
 
+
+def create_app():
+
+    app = Flask(__name__)
+    app.config.from_object('config.config.Config')
 
     @app.route('/')
     def home():
@@ -14,3 +16,6 @@ def create_app():
         return "Login endpoint"
 
     return app
+
+if __name__ == __main__:
+    app = create_app()
