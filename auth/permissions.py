@@ -1,7 +1,6 @@
 import functools
 from flask import g, jsonify
 
-
 # Decorator to check for permissions
 def permission_required(permission : str):
     def decorator(f):
