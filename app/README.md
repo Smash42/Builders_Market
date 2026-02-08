@@ -2,7 +2,9 @@
 # Author: Ashley Tierney
 
 # Project Overview: 
-    A place to view company products, inventory and create or track orders. I want to create a smooth and seamless customer experience throughout the entire process from registering, browsing products, and all the way through order delivery.
+    A place to view company products, inventory and create or track orders. 
+    I want to create a smooth and seamless customer experience throughout the entire process from registering, 
+    browsing products, and all the way through order delivery.
 
 # Technologies Used: 
     Front end framework right now we just have API routes. HTML and CSS will be coming into play soon. 
@@ -13,12 +15,12 @@
 
 # Setup Instructions:
  **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND.py need to be written as app/___.py or app/___.txt
- * Should app be in the main folder then please disregard the above. 
-    Prerequisites: Python 3.12.5, Flask, SQLite  
-    Install dependencies: pip install -r requirements.txt
-    How to configure database credentials: Database settings are stored in config/config.py
-    How to initialize the database schema: In new terminal: flask init-db
-    How to start the server: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+ ** Should app be in the main folder then please disregard the above. 
+    * Prerequisites: Python 3.12.5, Flask, SQLite  
+    * Install dependencies: pip install -r requirements.txt
+    * How to configure database credentials: Database settings are stored in config/config.py
+    * How to initialize the database schema: In new terminal: flask init-db
+    * How to start the server: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
 
 # Project Structure: Folder organization
     Auth: In here you will find the login required permission to ensure that a user is authenticated and logged in. You will also find the permissions required check in order to confirm that the user has the permissions needed to view and perform the tasks of that page. 
