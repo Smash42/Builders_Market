@@ -23,39 +23,39 @@
 * How to start the server: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
 
 # Project Structure: Folder organization
-    Auth: In here you will find the login required permission to ensure that a user is authenticated and logged in. 
+* Auth: In here you will find the login required permission to ensure that a user is authenticated and logged in. 
         You will also find the permissions required check in order to confirm that the user has the permissions 
         needed to view and perform the tasks of that page. 
     
-    Config: This folder holds the congifuration file with the secret key and database information.
+* Config: This folder holds the congifuration file with the secret key and database information.
     
-    Database: In here is the schema.sql file which created our database and the connection python file which connects the database, 
+* Database: In here is the schema.sql file which created our database and the connection python file which connects the database, 
         opens the connection and creates the necessary tables, as well as a few queries that might be needed throughout the project. 
     
-    Instance: Empty for now, might have the db sit here, as this is what I have done in the past. 
+* Instance: Empty for now, might have the db sit here, as this is what I have done in the past. 
     
-    Models:
+* Models: Empty for now
     
-    Routes: Each route has it's own file that pertains to any tasks relating to that route. 
+* Routes: Each route has it's own file that pertains to any tasks relating to that route. 
         i.e. Products has different routes to add a new product, edit a product, delete a product, view all products, 
         and view a single produts information. 
     
-    Utils: Holds the general error handler information for different errors that might show up. 400, 401, 403, 404, 500
+* Utils: Holds the general error handler information for different errors that might show up. 400, 401, 403, 404, 500
     
-    app.py: this is our main python file for our app to run. 
+* app.py: this is our main python file for our app to run. 
     
-    requirements: tells you what you need in order to run the app
+* requirements: tells you what you need in order to run the app
     
-    ReadMe: Information regarding the app. 
+* ReadMe: Information regarding the app. 
 
 # Routes Implemented: List of all routes, organized by file
-    Admin: View Permissions, Delete a Role, Edit an existing Role, Create a new Role, View all Roles, Edit a User, Delete a User, Update User's Role, View a specific User's details, View all Users
-    Auth:  User Registration, Login, Logout, Password Reset, Password Reset confirmation. , Current User Profile
-    Cart:  Add to Cart, View Cart
-    Categories:  Add Category, Delete Category, View all Categories, View 1 Category and their associated products
-    Orders:  Create an order, Update an order, Delete an order (own vs. any with permission), View all orders (owned vs all user's orders pending permission), Order detais (owned vs any user's pending permission)
-    Products:  View all products, View one product's details, Add a new Product, Edit an existing Product, Delete a Product
-    Reviews: Add a Review, Edit a Review (owned vs any pending permission), Delete a Review (owned vs any pending permission), View Review based on a Product, View all Reviews. 
+* Admin: View Permissions, Delete a Role, Edit an existing Role, Create a new Role, View all Roles, Edit a User, Delete a User, Update User's Role, View a specific User's details, View all Users
+* Auth:  User Registration, Login, Logout, Password Reset, Password Reset confirmation. , Current User Profile
+* Cart:  Add to Cart, View Cart
+* Categories:  Add Category, Delete Category, View all Categories, View 1 Category and their associated products
+* Orders:  Create an order, Update an order, Delete an order (own vs. any with permission), View all orders (owned vs all user's orders pending permission), Order detais (owned vs any user's pending permission)
+* Products:  View all products, View one product's details, Add a new Product, Edit an existing Product, Delete a Product
+* Reviews: Add a Review, Edit a Review (owned vs any pending permission), Delete a Review (owned vs any pending permission), View Review based on a Product, View all Reviews. 
 
 
 # Testing Instructions: How to test the routes (example curl commands or Postman collection)
