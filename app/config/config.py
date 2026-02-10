@@ -1,5 +1,7 @@
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Config:
-    SECRET_KEY = "dev-secret-key"
-    DATABASE = "/database/buildersmarket.db"
-    DEBUG = True
+    DATABASE = os.path.join(BASE_DIR, 'instance', 'builders_market.db')
+    SECRET_KEY = 'dev-secret-key'

@@ -7,14 +7,15 @@
     browsing products, and all the way through order delivery.
 
 # Technologies Used: 
-    Front end framework right now we just have API routes. HTML and CSS will be coming into play soon. 
-    Backend Framework: We are utilizing Flask 
-    Language: Python
-    Database: SQLite
+* Front end framework right now we just have API routes. HTML and CSS will be coming into play soon. 
+* Backend Framework: We are utilizing Flask 
+* Language: Python
+* Database: SQLite
 
 
 # Setup Instructions:
  **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND.py need to be written as app/___.py or app/___.txt
+
  ** Should app be in the main folder then please disregard the above. 
 * Prerequisites: Python 3.12.5, Flask, SQLite  
 * Install dependencies: pip install -r requirements.txt
@@ -32,7 +33,7 @@
 * Database: In here is the schema.sql file which created our database and the connection python file which connects the database, 
         opens the connection and creates the necessary tables, as well as a few queries that might be needed throughout the project. 
     
-* Instance: Empty for now, might have the db sit here, as this is what I have done in the past. 
+* Instance: Once the database is initialized, it will live here. 
     
 * Models: Empty for now
     
