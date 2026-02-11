@@ -75,9 +75,7 @@ def get_category_by_id(category_id):
             return None
         finally:
             db.close()
-
-    
-            
+          
             
 @click.command('init-db')
 def init_db_command():

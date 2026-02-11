@@ -26,7 +26,7 @@ def user_detail(user_id):
 @admin_bp.route('/users/<int:user_id>/role', methods=['PATCH'])
 @login_required
 @user_role_required('admin')
-@permission_required('user.changrole')
+@permission_required('user.changerole')
 def update_user_role(user_id):
     #Stub for now to ensure that all routes are working properly.
     #Get new role from form, validate role, if valid update user role in DB. 
@@ -39,7 +39,7 @@ def update_user_role(user_id):
 def delete_user(user_id):
     #Stub for now to ensure that all routes are working properly.
     #Delete user from DB. 
-    return jsonify({'success': True, 'message': f'DELETE /api/admin/users/{user_id} Route. User deleted successfully' }), 204
+    return '', 204
 
 #Edit User
 @admin_bp.route('/users/<int:user_id>', methods=['PUT'])
@@ -83,7 +83,7 @@ def edit_role(role_id):
 def delete_role(role_id):
     #Stub for now to ensure that all routes are working properly.
     #Delete role from DB. 
-    return jsonify({'success': True, 'message': f'DELETE /api/admin/roles/{role_id} Route. Role deleted successfully' }), 204
+    return '', 204
 
 # List all Permissions, read
 @admin_bp.route('/permissions', methods=['GET'])

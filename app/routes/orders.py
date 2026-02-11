@@ -49,7 +49,7 @@ def update_order(order_id):
 @permission_required('order.delete.own')
 def delete_order(order_id):
     # DELETE Order from Database based on order_id and user_id or all orders if moderator or admin.....
-    return jsonify({'success': True, 'message': f'Order with ID {order_id} deleted successfully'}), 204
+    return '', 204
 
 
 # View orders own vs all orders
@@ -58,12 +58,11 @@ def delete_order(order_id):
 #Users can only see orders they own, Moderator or Admin can see all orders
 def view_orders():
     # GET Orders from Database based on user_id or all orders if moderator or admin.....
-    orders = [
-        {'order_id': 1, 'product_name': 'Hammer', 'quantity': 2, 'price': 19.99, 'status': 'Processing'},
-        {'order_id': 2, 'product_name': 'Nails', 'quantity': 100, 'price': 5.49, 'status': 'Shipped'}
-    ]
+    #stubbed so no hardcoded
+
+    # add data __
     return jsonify({'success': True, 'message': 'GET /api/orders/ Route. All orders retrieved successfully', 
-                    'data': orders}), 200
+                    }), 200
 
 
 #view a single order. if owned or moderator vs admin
@@ -73,12 +72,8 @@ def view_orders():
 @permission_required('order.view.own')
 def order_details(order_id):
     # GET Order from Database based on order_id and user_id or all orders if moderator or admin.....
-    order = {
-        'order_id': order_id,
-        'product_name': 'Hammer',
-        'quantity': 2,
-        'price': 19.99,
-        'status': 'Processing'
-    }
+    #Stubbed so no hardcoded
+
+    # add data
     return jsonify({'success': True, 'message': f'GET /api/orders/{order_id} Route. Order retrieved successfully', 
-                    'data': order}), 200
+                    }), 200

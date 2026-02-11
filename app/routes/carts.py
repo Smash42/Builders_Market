@@ -32,6 +32,8 @@ def add_to_cart():
 def view_cart():
     
     # GET cart items from a database or session
+    #hard coded for testing purposes. 
+    # DELETE HARD CODE
     cart_items = [
         {'product_id': 1, 'product_name': 'Hammer', 'quantity': 2, 'price': 19.99},
         {'product_id': 2, 'product_name': 'Nails', 'quantity': 100, 'price': 5.49}

@@ -24,7 +24,7 @@ def add_category():
 @permission_required('category.delete')
 def delete_category(category_id):
     # DELETE Category from Database based on category_id.....
-    return jsonify({'success': True, 'message': f'DELETE /api/category/{category_id} Route. Category deleted successfully'}), 204
+    return '', 204
 
 #View a list of Categories
 @category_bp.route('/', methods=['GET'])

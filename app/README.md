@@ -17,6 +17,11 @@
  **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND.py need to be written as app/___.py or app/___.txt
 
  ** Should app be in the main folder then please disregard the above. 
+ * Setup:
+  python -m venv .venv
+  .venv\Scripts\activate (on Windows)
+  pip install -r requirements.txt
+
 * Prerequisites: Python 3.12.5, Flask, SQLite  
 * Install dependencies: pip install -r requirements.txt
 * How to configure database credentials: Database settings are stored in config/config.py
@@ -59,15 +64,29 @@
 * Reviews: Add a Review, Edit a Review (owned vs any pending permission), Delete a Review (owned vs any pending permission), View Review based on a Product, View all Reviews. 
 
 
-# Testing Instructions: How to test the routes (example curl commands or Postman collection)
+# Testing Instructions: ThunderClient Extension in VS Code
+* Make sure you have ThunderClient Extension installed into your VS Code
+* Start the project server via the terminal with "python app.py" (Make sure you are in the app folder)
+* Click on the ThunderClient Icon on the left side (Lightning bolt in a circle)
+* Select New Request and input the URL that was given to you in your terminal 
+* Add /api/products (or orders, cart, etc. for the respective route)
+* In Body JSON insert the below so you can view content.
+ {
+  "name": "John",
+  "age": 25
+}
+
+* It will automatically use the GET function, but change it to PUT, POST, DELETE to ensure all are working properly. 
 
 
 # Current Limitations: What's stubbed vs fully implemented
-* Stubbed: Auth Routes, Permisions and Authentication confirmation to ensure all routes work, 
+* Stubbed: Auth Routes (admin role), Permisions and Authentication confirmation to ensure all routes work.
         Adding orders, products, reviews, categories, etc is stubbed because DB wording isn't ready yet. 
+        Pulling information from the DB is stubbed right now to ensure routes work. 
         All admin roles are stubbed right now to ensure routes are working properly. 
 
 * Fully Implemented: Connection.py is implemented. 
+        login_required is implemented to ensure 401 error is working. 
         Logout is implemeneted with session.close()
         Product checks for valid input fields is implemented, but creation, update, deletion from DB is not
         Review check for valid rating input is implemeneted, but database is still in Stub
@@ -75,3 +94,4 @@
 
     *Need to make reviews, orders, so that users can only view what they own, but admin or moderator can view them all. 
     ** Maybe do this utilizeing session.user_id = review.user_id and permission review.edit.own OR permission review.edit.all 
+    ** Will be working on this. 

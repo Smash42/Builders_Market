@@ -7,6 +7,7 @@ from routes.orders import orders_bp
 from routes.auth import auth_bp
 from routes.categories import category_bp
 from routes.reviews import reviews_bp
+from routes.admin import admin_bp
 from utils.error_handler import register_error_handlers
 
 from database.connection import init_db_command
@@ -35,7 +36,10 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(category_bp)
     app.register_blueprint(reviews_bp)
+    app.register_blueprint(admin_bp)
 
+    print(app.url_map)
+    
     return app
 
 if __name__ == '__main__':

@@ -50,7 +50,7 @@ def edit_review(product_id, review_id):
 @permission_required('review.delete.own')
 def delete_review(product_id, review_id):
     # DELETE Review from Database based on review_id and product_id.....
-    return jsonify({'success': True, 'message': f'DELETE /api/products/{product_id}/reviews/{review_id} Route. Review deleted successfully'}), 204
+    return '', 204
 
 #view reviews for a specific product
 @reviews_bp.route('/products/<int:product_id>/reviews', methods=['GET'])

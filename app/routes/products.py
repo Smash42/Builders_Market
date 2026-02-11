@@ -8,25 +8,22 @@ products_bp = Blueprint('products', __name__, url_prefix='/api/products')
 @products_bp.route('/', methods=['GET'])
 def get_products():
     # IMPORT PRODUCTS FROM DATABASE, Here for example purposes we will use a static list
-    products = [
-        {'product_id': 1, 'product_name': 'Hammer', 'price': '23.99', 'quantity': 50, 'description': 'A sturdy hammer for all your construction needs.'},
-        {'product_id': 2, 'product_name': 'Milwaukee Drill', 'price': '175.99', 'quantity': 20, 'description': '18 volt cordless drill with two batteries.'}
-    ]
+    #Stubbed for now so nothing is hardcoded. 
 
     #returning all products from DB
-    return jsonify({'success': True, 'message': 'Products retrieved successfully', 'data': products}), 200
+    return jsonify({'success': True, 'message': 'Products retrieved successfully'}), 200
 
 # Get Product details by ID
 @products_bp.route('/<int:product_id>', methods=['GET'])
 def product_details(product_id):
 
     # IMPORT PRODUCT FROM DATABASE
-    product = {'product_id': product_id, 'product_name': 'Hammer', 'price': '23.99', 'quantity': 50, 'description': 'A sturdy hammer for all your construction needs.'}
+    #Stubbed for now so nothing is hardcoded. 
 
-    if not product:
-        return jsonify({'success': False, 'error': 'Product not found. Please check URL and try again.'}), 404
-    
-    return jsonify({'success': True, 'message': 'Product retrieved successfully', 'data': product}), 200
+    #if not product:
+        #return jsonify({'success': False, 'error': 'Product not found. Please check URL and try again.'}), 404
+    # add details later
+    return jsonify({'success': True, 'message': 'Product retrieved successfully'}), 200
 
 # Add new product
 @products_bp.route('/', methods=['POST'])
@@ -92,5 +89,5 @@ def edit_product(product_id):
 def delete_product(product_id):
     # DELETE product from DB
     
-    return jsonify({'success': True, 'message': f'Product with id {product_id} deleted successfully.'}), 204
+    return '', 204
 
