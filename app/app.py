@@ -38,8 +38,6 @@ def create_app():
     app.register_blueprint(reviews_bp)
     app.register_blueprint(admin_bp)
 
-    print(app.url_map)
-    
     return app
 
 if __name__ == '__main__':
