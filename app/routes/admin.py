@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, session
 from auth.auths import login_required, user_role_required
 from auth.permissions import permission_required
+from database import connection
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 
@@ -10,6 +11,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 @user_role_required('admin')
 def view_users():
     #stub for now to ensure that all routes are working properly.
+    connection.get_all_users()
     return jsonify({'success': True, 'message': 'GET /api/admin/users Route. User list retrieved successfully' }), 200
 
 
@@ -17,10 +19,11 @@ def view_users():
 @admin_bp.route('/users/<int:user_id>', methods=['GET'])
 @login_required 
 @user_role_required('admin')
-
 def user_detail(user_id):
     #Stub for now to ensure that all routes are working properly.
+    connection.get_user_by_id(user_id)
     return jsonify({'success': True, 'message': f'GET /api/admin/users/{user_id} Route. User detail retrieved successfully' }), 200
+
 
 #Assign/update User Roles
 @admin_bp.route('/users/<int:user_id>/role', methods=['PATCH'])

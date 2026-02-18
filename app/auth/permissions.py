@@ -6,9 +6,9 @@ def permission_required(permission : str):
     def decorator(f):
         @wraps(f)
         def wrapped_view(*args, **kwargs):
-        
-            #Check if user has the required permissions here. 
-            #Stub for now to ensure all pages are functioning properly
+            if permission not in g.user.get("permissions", []):
+                return jsonify({"success": False, "error": "Forbidden"}), 403
+
             return f(*args, **kwargs)
         
         return wrapped_view

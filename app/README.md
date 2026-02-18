@@ -95,3 +95,16 @@
     *Need to make reviews, orders, so that users can only view what they own, but admin or moderator can view them all. 
     ** Maybe do this utilizeing session.user_id = review.user_id and permission review.edit.own OR permission review.edit.all 
     ** Will be working on this. 
+
+## Addded 2/17
+* Check ZIP FILE for other* 
+* Product model
+* User Model
+* import product, browse products.py
+* Product Route- Add, Edit, Delete, Browse? Detail?
+* Auth: Login, Register
+* Admin, get all users, user by ID
+
+
+* 
+* No HTML Pages created

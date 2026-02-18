@@ -1,22 +1,76 @@
 from flask import Blueprint, request, jsonify, session
 from auth.auths import login_required
-
+from models.users import User
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    #Stub for now to ensure that all routes are working properly.
     # from the form get users username, email, password, and verify password.
+    ##Check password Meets Requirements!
+    hasError = False
+    name = request.form['name'].strip()
+    if len(name) ==0:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Enter Valid username'}), 400
+    
+    email = request.form['email'].strip()
+    if len(email) ==0:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Enter Valid Email'}), 400
+    
+    password = request.form['password'].strip()
+    if len(password) == 0:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Enter Valid Password'}), 400
+    verifypassword = request.form['verifypassword'].strip()
+    if len(verifypassword) == 0:
+            hasError = True
+            return jsonify({'success': False, 'message': 'Error: Confirm Password'}), 400
+    
+    if password != verifypassword:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Passwords do not match'}), 400
+    
+    #Check Email unique
+    check = User.FromEmail(email)
+    if check != None:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Email already registered'}), 400
+    
+
     # Ensure username and email is unique, and password and verify password match.
     # Hash the password and store the user in the database with default role of 'user'
+    if not hasError:
+        user = User.Create(name, email, password)
     return jsonify({'success': True, 'message': 'POST /api/auth/register Route. User registration successful'}), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    #Stub for now to ensure that all routes are working properly.
-    #Check for username to be found in DB
-    # check password against matching username in DB
-    # if valid, store user info in session to keep them logged in
+    email = request.form['email'].strip()
+    if len(email)==0:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Enter Valid Email'}), 400
+    password = request.form['password'].strip()
+    if len(password)==0:
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Enter a Password'}), 400
+    
+    #Check if Email exits 
+    # add From Email to Model users
+    user = User.FromEmail(email)
+    if user == None:
+        #no email found
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Login information did not match'}), 400
+    #Check Password
+    from werkzeug.security import check_password_hash
+    if user.CheckPassword(password) ==False:
+        #wrong password
+        hasError = True
+        return jsonify({'success': False, 'message': 'Error: Login information did not match'}), 400
+
+    session['userid'] = user.user_id
+    # if valid, store user info in session to keep them logged in    
     return jsonify({'success': True, 'message': 'POST /api/auth/login Route. User login successful'}), 200
 
 @auth_bp.route('/logout', methods=['POST'])

@@ -1,3 +1,4 @@
+
 from functools import wraps
 from flask import g, jsonify, request
 
@@ -7,31 +8,29 @@ from flask import g, jsonify, request
 def login_required(f):
     @wraps(f)
     def wrapped_view(*args, **kwargs):
-        auth_header = request.headers.get('Authorization')
-
-        if not auth_header: 
-           #return jsonify({'success': False, 'error': 'Authentication Required. Please log in.'}), 401
+        if not g.get("user"): 
+           return jsonify({'success': False, 'error': 'Authentication Required. Please log in.'}), 401
  
-            print(f"Authentication required for: {request.path}")  # Debugging statement
-
         return f(*args, **kwargs)
     return wrapped_view
 
-def user_role_required(role):
+# Check for role, use in admin.py
+def user_role_required(*roles):
     def decorator(f):
         @wraps(f)
-        def wrapped_view(*args, **kwargs):
+        def wrapped_view(*arg, **kwargs):
             # Check if user is logged in and has the required role
-             #if not g.user:
-                 #return jsonify({'success': False, 'error': 'Authentication Required. Please log in.'}), 401
-             #if g.user['role'] != role:
-                 #return jsonify({'success': False, 'error': 'Permission Denied. Insufficient role.'}), 403
-            
-            # Stub for now to ensure that all routes are working properly.
-            print(f"Role '{role}' required for: {request.path}")  # Debugging statement
+            user = g.get("user")
 
-            return f(*args, **kwargs)
+            if not user:
+                return jsonify({'success': False, 'error': 'Authentication Required. Please log in.'}), 401
+            
+            if user.get("role") not in roles:
+                return jsonify({'success': False, 'error': 'Permission Denied. Insufficient role.'}), 403
+
+            print(f"Role '{roles}' required for: {request.path}")  # Debugging statement
+
+            return f(*arg, **kwargs)
         return wrapped_view
     return decorator
-#if user.
-# Add role for if Admin, then skip permission checks
+

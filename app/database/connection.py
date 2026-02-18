@@ -62,7 +62,6 @@ def get_all_users():
         finally:
             db.close()
 
-
 #Query function category ID         
 def get_category_by_id(category_id):
     db = get_connection()

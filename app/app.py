@@ -1,5 +1,4 @@
-from flask import Flask
-from utils.error_handler import register_error_handlers
+from flask import Flask, session, g
 
 from routes.products import products_bp
 from routes.carts import carts_bp
@@ -9,13 +8,14 @@ from routes.categories import category_bp
 from routes.reviews import reviews_bp
 from routes.admin import admin_bp
 from utils.error_handler import register_error_handlers
+from database.connection import get_user_by_id
 
 from database.connection import init_db_command
 
 
 def create_app():
     app = Flask(__name__)
-    
+
     #Load configuration
     app.config.from_object('config.config.Config')
 
@@ -23,6 +23,24 @@ def create_app():
     app.cli.add_command(init_db_command)
 
     register_error_handlers(app)
+
+    @app.before_request
+    def current_user():
+        user_id = session.get("user_id")
+
+        if not user_id:
+            g.user = None
+            return
+        user = get_user_by_id(user_id)
+        if user:
+            g.user = {
+                "id": user["id"],
+                "username": user["username"],
+                "role": user["role"],
+                "permissions": user["permissions"]
+            }
+        else:
+            g.user = None
 
     @app.route('/')
     def home():
