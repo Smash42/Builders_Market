@@ -7,6 +7,7 @@
             <a href="{{url_for('admin.create_role')}}"> Add a New Role </a>
         </button>
 <br> <br>
+<div class="role-grid">
 {% for role in roles %}
 <div class="role-card" >
 <h2> {{role.role_name}}</h2>
@@ -22,5 +23,6 @@
         </button>
 </div>
 {% endfor %}
+</div>
 
 {% endblock %}

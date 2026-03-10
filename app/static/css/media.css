@@ -1,0 +1,108 @@
+@media only screen and (max-width: 480px) {
+  
+    body {
+        font-size: 90%;
+        padding: 1em;
+        width: 90%;
+    }
+
+
+    h1 {
+        text-align: center;
+        font-size: 1.5em;
+        width: 95%;
+        margin: 1px;
+    }
+    #hamburger {
+        display: block;
+    }
+
+    #navMenu {
+        display: none;
+        position: absolute;
+        top: 90px;
+        left: 25px;
+        border: 2px black solid;
+        width: 30%;
+        background-color: rgb(41, 151, 155);
+        flex-direction: column;
+        padding: 5px 0;
+        z-index: 1000;
+    }
+    #navMenu a{
+        display: block;
+        padding: 5px;
+        border-top: 1px black solid;
+    }
+    #navMenu.show {
+        display: block;
+    }
+    
+    .authButton {
+        float: unset;
+    }
+
+    .authButton button {
+        height: 2.2em;
+
+    }
+
+    button {
+        height: 2.2em;
+        padding: 5px;
+    }
+    .creation {
+    height: 40px;
+    width: 30%;
+    justify-content: center;
+}
+    .dashboard-grid {
+        display: grid;
+        flex-direction: column;
+        justify-content: center;
+        padding: auto;
+        margin: auto;
+    }
+
+    .dashboard-grid button {
+        width: 12em;
+        height: 5em;
+        font-size: large;
+    }
+
+    .product-grid, .order-grid, .user-grid, .role-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        margin: auto;
+    }
+
+    .product-card, .user-card, .role-card, .category-card {
+        display: grid;
+        border: 2px solid black;
+        flex-direction: column;
+        text-align: center;
+        margin: 2px;
+        overflow-wrap: break-word;
+
+    }
+    .product-card button {
+        display: flex-wrap;
+        height: 30px;
+        width: 30%;
+    }
+
+    .user-card button {
+        height: 30px;
+        width: 40%;
+    }
+    .role-card button {
+        height: 40px;
+        width: 40%;
+    }
+
+    footer {
+        order: 100;
+    } 
+
+}

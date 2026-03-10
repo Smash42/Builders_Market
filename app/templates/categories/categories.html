@@ -3,23 +3,23 @@
 
 {% block content %}
 <h1> Categories </h1>
-        <button class="greenButton" type="submit">
+        <button class="greenButton creation" type="submit">
             <a href="{{url_for('category.add_category')}}"> Add a New Category </a>
         </button>
 
-<div class="product-grid"></div>
+<div class="product-grid">
 {% for category in category %}
-
-<h4> {{category.category_name}} </h4>
-
-    {% if 'category.delete' in g.user.permissions %}
-    <button class="redButton">
-        <a  href="{{ url_for ('category.delete_category', category_id = category.category_id)}}"> 
+    <div class="category-card" >
+        <h4> {{category.category_name}} </h4>
+            {% if 'category.delete' in g.user.permissions %}
+        <button class="redButton">
+            <a  href="{{ url_for ('category.delete_category', category_id = category.category_id)}}"> 
             Delete</a>
-    </button>
-    {% endif %}
+        </button>
+            {% endif %}
 
-
+    </div>
+    <br>
 {% endfor %}
 </div>
 {% endblock %}

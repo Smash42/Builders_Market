@@ -4,8 +4,9 @@
 {% block content %}
 <h1> Order {{order.order_id}} Details </h1>
 
-<p:> User Id: {{order.username}}     </p>   
+<p:> User: {{order.username}}     </p>   
     <p>Total: $ {{order.total}} </p>
+    <p> Order Created: {{order.created_at }} <p> Order Updated: {{order.updated_at}} </p> </p>
 <p> Status: {{order.status}}</p>
 {% if 'order.edit' in g.user.permissions  %}
 <form method="POST" action="{{ url_for('orders.update_order', order_id=order.order_id) }}">

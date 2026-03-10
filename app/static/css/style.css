@@ -3,12 +3,12 @@ header {
     background-color: rgba(0, 128, 128, 0.925);
     color: white;
     padding: 5px;
-    text-align: center;  
+    text-align: center; 
+
 }
 
 header a {
     color: white;
-
 }
 body {
     background-color: antiquewhite;
@@ -16,6 +16,23 @@ body {
 footer {
     background-color: rgb(37, 37, 37);
     color: white;
+}
+
+#hamburger {
+    display: none;
+}
+
+#navMenu a {
+    text-decoration: none;
+}
+
+.authButton {
+    display: flexbox;
+    float: right;
+}
+
+.authButton Button {
+    width: 7em;
 }
 
 #logo {
@@ -68,6 +85,7 @@ button:hover{
     width: 20%;
     justify-content: center;
 }
+
 .dashboard-grid {
     margin-left: 50px;
     justify-content: center;
@@ -81,7 +99,6 @@ button:hover{
     border-radius: 10px;
     border-width: 4px;
     border-color: black;
-
 }
 
 
@@ -96,7 +113,7 @@ button:hover{
     gap: 2em;
 }
 
-.product-card, .user-card, .role-card{
+.product-card, .user-card, .role-card, .category-card{
     display: inline-block;
     padding: 5px;
     border: 2px solid black;

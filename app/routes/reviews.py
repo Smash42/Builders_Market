@@ -97,7 +97,7 @@ def delete_review(product_id, review_id):
 def view_reviews(product_id):
     reviews = Review.GetByProduct(product_id)
 
-    return render_template('reviews_product.html', reviews=reviews, product_id=product_id)
+    return render_template('review/reviews_product.html', reviews=reviews, product_id=product_id)
 
 # view all reviews for all products
 @reviews_bp.route('/reviews', methods=['GET'])
