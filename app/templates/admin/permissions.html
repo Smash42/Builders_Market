@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Permissions {% endblock %}
+
+{% block content %}
+
+
+
+<table >
+    <thead>
+        <tr>
+            <th><h3>Permission Name </h3></th>
+            <th> <h3>Description </h3></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for permission in permissions %}
+        <tr>
+            <td> <h3>{{permission.permission_name}}</h3></td>
+
+            <td> {{permission.description}} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+
+{% endblock %}

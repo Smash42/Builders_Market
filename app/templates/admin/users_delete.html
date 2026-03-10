@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} User- Delete {% endblock %}
+
+{% block content %}
+<h1> Delete User </h1>
+
+
+<br>
+    <p> Are you sure you want to delete <strong> {{user.username}}</strong> ? </p>
+    <p> User ID: {{user.user_id}}</p>
+    <p> User Email: {{user.email}}</p>
+    <p> User Role: {{user.role}} </p>
+    <br>
+
+<p> Form to confirm deleteion of User in DB </p>
+<form method="POST" action="{{ url_for('admin.delete_user', user_id=user.user_id) }}">
+    <button type="submit" class="redButton">Delete</button>
+</form>
+
+{% endblock %}

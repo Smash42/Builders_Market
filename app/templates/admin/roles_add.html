@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Roles- Add {% endblock %}
+
+{% block content %}
+
+<h1> Create a Role </h1>
+
+<form action="{{url_for('admin.create_role')}}" method="post">
+    <label for="name"> Role Name: </label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="description"> Role Description: </label>
+    <input type="text" id="description" name="description" style="width: 500px;">
+    <br>
+
+
+    <button type="submit" class="greenButton"> Add Role </button>
+</form>
+
+{% endblock %}

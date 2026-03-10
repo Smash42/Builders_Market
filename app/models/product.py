@@ -1,5 +1,6 @@
 
 from database.connection import get_connection
+from models.categories import Category
 
 class ProductItem:
     def __init__(self, product_id, name, description, price, quantity):
@@ -42,11 +43,33 @@ class ProductItem:
     @staticmethod
     def Create(name, description, price, quantity):
         db = get_connection()
-        sql = """INSERT INTO products (product_name, description, price, quantity) VALUES (?, ?, ?, ?);"""
-        cursor = db.execute(sql, [name, description, price, quantity])
-        product_id = cursor.lastrowid
-        db.commit()
-        return ProductItem.FromDB(id)
+        try:
+            cursor = db.execute("""
+                INSERT INTO products (product_name, description, price, quantity)
+                VALUES (?, ?, ?, ?)
+                """, (name, description, price, quantity))
+
+            product_id = cursor.lastrowid
+            db.commit()
+
+            return ProductItem.FromDB(product_id)
+
+        finally:
+            db.close()
+
+    @staticmethod
+    def GetByID(product_id):
+        db = get_connection()
+        try:
+            row = db.execute(
+                "SELECT * FROM products WHERE product_id = ?",
+            (product_id,)
+            ).fetchone()
+
+            return ProductItem.FromDBRow(row)
+
+        finally:
+            db.close()
     
 # DB from row
     @staticmethod   
@@ -59,13 +82,42 @@ class ProductItem:
             description=row['description'],       
             price=row['price'],
             quantity= row['quantity']
-    )
+        )
 
     @staticmethod  
-    def FromDB(id : int):
+    def FromDB(product_id : int):
         db = get_connection()
-        sql = "SELECT * FROM products WHERE product_id = ?;"
-        result = db.execute(sql, [id]).fetchone()
-        return ProductItem.FromDBRow(result)
+        sql = db.execute( """SELECT * FROM products WHERE product_id = ?""", (product_id,)).fetchone()
+        db.close()
+
+        return ProductItem.FromDBRow(sql)
+    
+    #Search Query
+    @staticmethod
+    def Search(category_id = None, search = None):
+        db = get_connection()
+        sql = """
+            SELECT DISTINCT p.*
+            FROM products p
+            LEFT JOIN product_categories pc ON p.product_id = pc.product_id
+            LEFT JOIN categories c ON pc.category_id = c.category_id
+            WHERE 1=1 
+            """
+        
+        param = []
+
+        if category_id:
+            sql += " AND pc.category_id = ?"
+            param.append(category_id)
+
+        if search:
+            sql+= "AND p.product_name LIKE ? OR p.description LIKE ?"
+            param.append(f"%{search}%")
+            param.append(f"%{search}%")
+
+        
+        rows = db.execute(sql, param).fetchall()
+
+        return [ProductItem.FromDBRow(row) for row in rows]
 
         

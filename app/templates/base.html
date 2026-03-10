@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Builder's Market{% endblock %}</title>
+    <link href="{{url_for('static', filename = 'reset.css' )}}" rel="stylesheet">
+    <link href="{{url_for('static', filename = 'style.css' )}}" rel="stylesheet">
+    <link href="{{url_for('static', filename = 'media.css' )}}" rel="stylesheet">
+</head>
+<body >
+    {% for message in get_flashed_messages() %}
+    <div class="flash"> {{message}}</div>
+    {% endfor %}
+
+    <header>
+        <div id="logo">Builder's Market</div>
+
+        <div id="nav">
+        <a href="{{url_for('home')}}"> Home </a> |
+        <a href="{{url_for('products.get_products')}}"> Products </a> |
+
+        {% if g.user %}
+        <a href="{{url_for('orders.view_orders')}}"> Orders</a> |
+        <a href="{{url_for('cart.view_cart')}}"> Cart</a> |
+        <a href="{{url_for('auth.profile')}}"> My Profile</a>
+
+        {% endif %}
+        {% if g.user.role in ["Admin"] %}
+         | <a href="{{url_for('admin.view_users')}}"> Users </a>
+        {% endif %}
+        </div>
+
+            <div class="authButton">
+            {% if not g.user %}
+                <button class="greenButton"><a href="{{url_for('auth.login')}}"> Login</a></button> | 
+                <button class="orangeButton"><a href="{{url_for('auth.register')}}"> Register</a> </button>
+            {% else %}
+                <button class="greenButton" ><a href="{{url_for('auth.logout')}}"> Logout</a> </button>
+            {% endif %}
+            </div>
+
+
+    </header>
+
+    <main>
+        <div class="container">
+        {% block content %}
+
+        
+        {% endblock %}
+        </div>
+    </main>
+
+
+    <footer>
+            <p>&copy; 2026 Builder's Market. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

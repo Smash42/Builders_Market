@@ -23,7 +23,7 @@ CREATE TABLE users (
 
 /* Define Role options for users */
 CREATE TABLE roles (
-    role_id INT PRIMARY KEY,
+    role_id INTEGER PRIMARY KEY,
     role_name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -31,7 +31,7 @@ CREATE TABLE roles (
 
 /* Permissions that can be assigned to roles */
 CREATE TABLE permissions (
-    permission_id INT PRIMARY KEY, 
+    permission_id INTEGER PRIMARY KEY, 
     permission_name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -39,8 +39,8 @@ CREATE TABLE permissions (
 
 /* Connects Roles to th Permissions they have */
 CREATE TABLE role_permissions (
-    role_id INT,
-    permission_id INT,
+    role_id INTEGER,
+    permission_id INTEGER,
     assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (role_id, permission_id),
     FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE,
@@ -49,8 +49,8 @@ CREATE TABLE role_permissions (
 
 /* Connect Users to their Roles  */
 CREATE TABLE user_roles (
-    user_id INT,
-    role_id INT,
+    user_id INTEGER,
+    role_id INTEGER,
     assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, role_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
@@ -59,7 +59,7 @@ CREATE TABLE user_roles (
 
 /* Table with all the Products available  */
 CREATE TABLE products (
-    product_id INT PRIMARY KEY,
+    product_id INTEGER PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
@@ -70,10 +70,10 @@ CREATE TABLE products (
 
 /* Table for storing orders */
 CREATE TABLE orders (
-    order_id INT PRIMARY KEY,
-    user_id INT NOT NULL,
+    order_id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    status VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
@@ -81,10 +81,10 @@ CREATE TABLE orders (
 
 /* Table to connect Orders and Products with quantity and price purchased at */
 CREATE TABLE order_items (
-    order_item_id INT PRIMARY KEY,
-    order_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
+    order_item_id INTEGER PRIMARY KEY,
+    order_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     purchase_price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
@@ -92,14 +92,14 @@ CREATE TABLE order_items (
 
 /* Table to define Product Categories */
 CREATE TABLE categories (
-    category_id INT PRIMARY KEY,
+    category_id INTEGER PRIMARY KEY,
     category_name VARCHAR(25) NOT NULL UNIQUE
 );
 
 /* Connects Product to their respective categories */
 CREATE TABLE product_categories (
-    product_id INT,
-    category_id INT,
+    product_id INTEGER,
+    category_id INTEGER,
     PRIMARY KEY (product_id, category_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
@@ -107,10 +107,10 @@ CREATE TABLE product_categories (
 
 /* Table for user reviews on products */
 CREATE TABLE reviews (
-    review_id INT PRIMARY KEY,
-    product_id INT NOT NULL,
-    user_id INT NOT NULL,
-    rating INT CHECK (rating >= 0 AND rating <= 5),
+    review_id INTEGER PRIMARY KEY,
+    product_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    rating INTEGER CHECK (rating >= 0 AND rating <= 5),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
@@ -181,7 +181,7 @@ INSERT INTO product_categories (product_id, category_id) VALUES
 
 /* Setting up a user account, password would need to be encrypted */
 INSERT INTO users (user_id, username, email, password_hash) VALUES
-(1, 'Admin', 'admin@test.com', 'hashed_password_123'),
+(1, 'Ashley', 'admin@test.com', 'scrypt:32768:8:1$p4fHWQaIXEH2HTMt$4e4cf6fd878639c8b982d870072d2d53312d40e21f2c3646521d7e885380f77cdd4008402518af754dc829f22f2e0af7f0119caa55e59b1e999d41f6dd3d1417!'),
 (2, 'Moderator', 'moderator@test.com', 'hashed_password_456'),
 (3, 'Test User', 'Test1@test.com', 'hashed_password_789');
 

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<h1> Welcome Back {{g.user.username}}! </h1>
+
+
+<div class="dashboard-grid">
+   <button class="purpleButton">
+        <a href="{{ url_for('reviews.view_all_reviews') }}" class="purpleButton"> Reviews</a>
+    </button> 
+
+    <button class="greenButton">
+        <a href="{{ url_for('orders.view_orders') }}" > My Orders </a>
+    </button>
+
+    <button class="greenButton">
+        <a href="{{ url_for('auth.profile') }}" > My Profile </a>
+    </button>
+    
+</div>
+
+{% endblock %}

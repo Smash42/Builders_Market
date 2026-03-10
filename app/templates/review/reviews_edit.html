@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Reviews- Edit {% endblock %}
+
+{% block content %}
+<h1> Update Review</h1>
+
+<p> Product: {{product.product_name}} </p>
+<form action="{{url_for('reviews.edit_review', product_id = review.product_id, review_id = review.review_id)}}" method="post">
+    <label for="rating"> Product Rating: </label>
+    <input type="text" id="rating" name="rating" value="{{review.rating}}">
+    <button type="submit" class="greenButton"> Update Rating </button>
+</form>
+
+{% endblock %}

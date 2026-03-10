@@ -1,5 +1,6 @@
-from flask import Flask, session, g
+from flask import Flask, redirect, render_template, session, g, url_for
 
+from models.users import User
 from routes.products import products_bp
 from routes.carts import carts_bp
 from routes.orders import orders_bp
@@ -26,25 +27,30 @@ def create_app():
 
     @app.before_request
     def current_user():
-        user_id = session.get("user_id")
+        user_id = session.get('user_id')
+        if user_id:
+            user = User.FromID(user_id)
+            g.user = user
 
-        if not user_id:
-            g.user = None
-            return
-        user = get_user_by_id(user_id)
-        if user:
-            g.user = {
-                "id": user["id"],
-                "username": user["username"],
-                "role": user["role"],
-                "permissions": user["permissions"]
-            }
         else:
             g.user = None
+            g.user_permissions = []
 
     @app.route('/')
     def home():
-        return "Welcome to Builders Market!"
+        if g.user is None:
+            return render_template('home.html')
+        if g.user.role in ["Admin"]:
+            return render_template('dashboard_admin.html')
+        if g.user.role in ["Moderator"]:
+            return render_template('dashboard_mod.html')
+        if g.user:
+            return render_template('dashboard.html')
+        
+
+        # different dashboard for each role? 
+        #return render_template('dashboard.html')
+            
     
     #register the blueprint so the routes are available to the app
     #Url prefixes are in each .py file 

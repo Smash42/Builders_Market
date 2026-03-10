@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Roles- Edit {% endblock %}
+
+{% block content %}
+
+<h1> Update an Existing Role </h1>
+
+<h4> Role: {{role.role_name}} </h4>
+<p> Permissions: 
+    <ul>
+    {% for permission in role.permissions %} <li>{{permission.permission_name}}</li> {% endfor %}</p>
+    </ul>
+
+    <h4> Assign or Update Role Permissions</h4>
+<form method="POST" action="{{ url_for('admin.update_role_permissions', role_id=role.role_id) }}">
+    {% set role_perm_ids = role.permissions | map(attribute='permission_id') | list %}
+        <select name="permissions" multiple size="10">
+    
+        {% for permission in permissions %}
+            <option value="{{ permission.permission_id }}"
+                {% if permission.permission_id in role.permission_ids %}selected{% endif %}>
+                {{ permission.permission_name }}
+            </option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit"  class="greenButton"> Save </button>
+</form>
+
+{% endblock %}

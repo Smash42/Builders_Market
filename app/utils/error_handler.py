@@ -1,4 +1,5 @@
-from flask import jsonify
+from flask import jsonify, render_template
+
 
 def register_error_handlers(app):
 
@@ -8,15 +9,15 @@ def register_error_handlers(app):
 
     @app.errorhandler(401)
     def unauthorized(error):
-        return jsonify({'Error': 'Unauthorized. User is not authenticated. Please log in to access this page.'}), 401
+        return render_template('error/error_401.html'), 401
 
     @app.errorhandler(403)
     def forbidden(error):
-        return jsonify({'Error': 'Forbidden. You do not have permission to access this page.'}), 403
+        return render_template('error/error_403.html'), 403
     
     @app.errorhandler(404)
     def page_not_found(error):
-        return jsonify({'Error': 'Page Not Found. Please check the URL and try again.'}), 404
+        return render_template('error/error_404.html'), 404
 
     @app.errorhandler(500)
     def internal_server_error(error):

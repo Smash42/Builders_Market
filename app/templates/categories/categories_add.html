@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Category- Create {% endblock %}
+
+{% block content %}
+
+<h1> Create a Category </h1>
+
+<form action="{{url_for('category.add_category')}}" method="post">
+    <label for="name"> Category Name: </label>
+    <input type="text" id="name" name="name">
+    <br>
+    <button type="submit" class="greenButton"> Add Category </button>
+</form>
+
+{% endblock %}

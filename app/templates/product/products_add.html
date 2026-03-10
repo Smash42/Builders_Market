@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %} Product Creation {% endblock %}
+
+{% block content %}
+<h1> Create a new Product </h1>
+
+<!-- ADd a new Product to DB --> 
+<p></p>
+<form action="{{url_for('products.add_product')}}" method="post">
+    <label for="name"> Product Name: </label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="description"> Product Description: </label>
+    <input type="text" id="description" name="description" style="width: 500px;">
+    <br>
+    <label for="price">Product Price:</label>
+    <input type="text" id="price" name="price">
+    <br>
+    <label for="quantity">Product Quantity:</label>
+    <input type="text" id="quantity" name="quantity">
+    <br>
+    <button type="submit" class="greenButton"> Add Product </button>
+</form>
+
+{% endblock %}

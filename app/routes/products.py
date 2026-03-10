@@ -1,111 +1,140 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
 from auth.auths import login_required
 from auth.permissions import permission_required
+from database.connection import get_connection
+from models.categories import Category
 from models.product import ProductItem
+from models.review import Review
 
 
-products_bp = Blueprint('products', __name__, url_prefix='/api/products')
+
+products_bp = Blueprint('products', __name__, url_prefix='/products')
+
 
 # Get all products
 @products_bp.route('/', methods=['GET'])
 def get_products():
+    
+    category_id = request.args.get("category_id")
+    search = request.args.get("search")
+
     products = ProductItem.GetAll()
-    print(products)
-    # IMPORT PRODUCTS FROM DATABASE, Here for example purposes we will use a static list
+    categories = Category.GetAll()
 
+    products = ProductItem.Search(category_id, search)
+    categories = Category.GetAll()
 
-    #returning all products from DB
-    return jsonify({'success': True, 'message': 'Products retrieved successfully'}), 200
+    return render_template('product/products_browse.html', search = search, selected_category = category_id, products=products, categories = categories)
 
 # Get Product details by ID
 @products_bp.route('/<int:product_id>', methods=['GET'])
 def product_details(product_id):
 
-    # IMPORT PRODUCT FROM DATABASE
-    info = ProductItem.FromDB(product_id)
-    if info is None:
-        return jsonify({'success': False, 'message': 'Product not found'}), 404
+    product = ProductItem.FromDB(product_id)
+    reviews = Review.GetByProduct(product_id) 
+    if product is None:
+        abort(404)
 
-    #if not product:
-        #return jsonify({'success': False, 'error': 'Product not found. Please check URL and try again.'}), 404
-    # add details later
-    return jsonify({'success': True, 'message': 'Product retrieved successfully'}), 200
+    return render_template('product/products_detail.html', product=product, reviews=reviews)
 
-# Add new product
-@products_bp.route('/', methods=['POST'])
+# Add new product ...
+@products_bp.route('/add', methods=['GET', 'POST'])
 @login_required #authentication
 @permission_required('product.add') #permission
 def add_product():
-    data = request.get_json()
-
-    name = request.form['name'].strip()
-    description = request.form['description'].strip()
-    price = request.form['price'].strip()
-    quantity = request.form['quanity'].strip()
+    if request.method == 'GET':
+        return render_template('product/products_add.html')
+    
     hasError = False
 
+    name = request.form.get('name').strip()
+    description = request.form.get('description').strip()
+    price = request.form.get('price').strip()
+    quantity = request.form.get('quantity').strip()
+
     #Validate required fields
-    if not data.get('product_name'):
+    if not name:
         hasError = True
-        return jsonify({'success': False, 'error': 'Product name is required field.'}), 400
-    if not data.get('description'):
+        flash('Product name is required field.')
+    if not description:
         hasError = True
-        return jsonify({'success': False, 'error': 'Description is required field.'}), 400
+        flash('Description is required field.')
     
     try:
-        price = float(data.get('price'))
+        price = float(price)
         if price < 0:
             hasError = True
-            return jsonify({'success': False, 'Error': 'Price must be a positive number.'}), 400
+            flash('Price must be a positive number.')
     except (ValueError, TypeError):
         hasError = True
-        return jsonify({'success': False, 'Error': 'Price must be a valid currency amount (e.g., 24.99).'}), 400
+        flash('Price must be a valid currency amount (e.g., 24.99).')
     
     try: 
-        quantity = int(data.get('quantity'))
+        quantity = int(quantity)
         if quantity < 0:
             hasError = True
-            return jsonify({'success': False, 'Error': 'Quantity must be a non-negative integer.'}), 400
+            flash('Quantity must be a non-negative integer.')
     except (ValueError, TypeError):
         hasError = True
-        return jsonify({'success': False, 'Error': 'Quantity must be a valid whole number.'}), 400
+        flash('Quantity must be a valid whole number.')
+    
+    if hasError:
+        return render_template('product/products_add.html')
     
     # ADD Product to Database, data.....
     if not hasError:
         product = ProductItem.Create(name, description, price, quantity) 
-    return jsonify({'success': True, 'message': ' Post /api/products.- Route. Product created successfully'                  
-                    }), 201    
+        flash("Product created successfully")
+        return redirect(url_for('products.product_details', product_id=product.product_id))
+
+    return render_template('product/products_add.html')
 
 # Edit an existing product
-@products_bp.route('/<int:product_id>', methods=['PUT'])
+@products_bp.route('/<int:product_id>/edit', methods=['GET', 'POST'])
 @login_required
 @permission_required('product.edit')
 def edit_product(product_id):
-    data = request.get_json()
-
     info = ProductItem.FromDB(product_id)
     if info is None:
-        hasError: True
-        return jsonify({'success': False, 'message': 'Product not found'}), 404
+        abort(404)
     
-    name = request.form['name'].strip()
-    description = request.form['description'].strip()
-    price = request.form['price'].strip()
-    quantity = request.form['quantity'].strip()
+    categories = Category.GetAll()
+
+    if request.method == 'GET':
+        return render_template('product/products_edit.html', product=info, categories = categories)
+
+    name = request.form.get('name','').strip()
+    description = request.form.get('description').strip()
+    price = request.form.get('price').strip()
+    quantity = request.form.get('quantity').strip()
+
+    selected_categories = request.form.getlist('categories')
+
     hasError = False
 
-    if not data.get('product_name'):
+    if not name:
         hasError = True
-        return jsonify({'success': False, 'error': 'Product name is required field.'}), 400
-    if not data.get('price').isdigit() or int(data.get('price')) <= 0:
+        flash('Product name is required field.')
+
+    if not description:
         hasError = True
-        return jsonify({'success': False, 'error': 'Price is required field. Must be written in currency form, greater than zero. i.e. 24.99'}), 400
-    if not data.get('quantity').isdigit() or int(data.get('quantity')) < 0:
+        flash('Description is required field.')
+    try:
+        price = float(price)
+        if price < 0:
+            hasError = True
+            flash('Price must be a positive number.')
+    except (ValueError, TypeError):
         hasError = True
-        return jsonify({'success': False, 'error': 'Quantity is required field. Must be greater than zero.'}), 400
-    if not data.get('description'):
+        flash('Price must be a valid currency amount (e.g., 24.99).') 
+    try: 
+        quantity = int(quantity)
+        if quantity < 0:
+            hasError = True
+            flash('Quantity must be a non-negative integer.')
+    except (ValueError, TypeError):
         hasError = True
-        return jsonify({'success': False, 'error': 'Description is required field.'}), 400
+        flash('Quantity must be a valid whole number.')
     
     if not hasError:
         info.product_name = name
@@ -113,26 +142,34 @@ def edit_product(product_id):
         info.price = price
         info.quantity = quantity
         info.UpdateDatabase()
-    
-    return jsonify({'success': True, 'message': f'PUT /api/products/{product_id} route. Product updated successfully',
-                    'data': {
-                        'product_name': info.get('product_name'),
-                        'price': info.get('price'),
-                        'quantity': info.get('quantity'),
-                        'description': info.get('description')
-                    }}), 200
 
-# Delete a product
-@products_bp.route('/<int:product_id>', methods=['DELETE'])
+        db = get_connection()
+        #Delete old Categories
+        # db.execute( " DELETE FROM product_categories WHERE product_id = ?", (product_id))
+        
+        # Attache to new category
+        for category_id in selected_categories:
+            db.execute(" INSERT INTO product_categories (product_id, category_id) VALUES ( ?, ?)", (product_id, category_id))
+        db.commit()
+        db.close()
+
+        flash("Product updated successfully")
+        return redirect(url_for('products.product_details', product_id=info.product_id))
+    
+    return render_template('products_edit.html', product = info, categories = categories)
+
+# Delete a product  CHECK METHOD
+@products_bp.route('/<int:product_id>/delete', methods=['GET','POST'])
 @login_required 
 @permission_required('product.delete')
 def delete_product(product_id):
     # DELETE product from DB
     info = ProductItem.FromDB(product_id)
     if info is None: 
-        hasError: True
-        return jsonify({'success': False, 'message': 'Product not found'}), 404
-    
-    info.Delete()
-    return '', 204
+        abort(404)
+    if request.method =='POST':
+        info.Delete()
+        flash("Product deleted successfully")
+        return redirect(url_for('products.get_products'))
+    return render_template('product/products_delete.html', product = info)
 

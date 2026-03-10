@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Users {% endblock %}
+
+{% block content %}
+<h1> All Users </h1>
+<div class="user-grid">
+{% for user in users %}
+<div class="user-card" >
+<h2> Username: {{user.username}}</h2>
+    <p>User ID: {{user.user_id}}</p>
+    <p>Role: {{user.role}}</p>
+
+        <button class="blueButton" type="submit">
+            <a href="{{url_for('admin.user_detail', user_id=user.user_id)}}"> Details </a>
+        </button>
+        <button class="redButton">
+        <a  href="{{ url_for ('admin.delete_user', user_id = user.user_id)}}">  Delete</a>
+    </button>
+
+</div>
+{% endfor %}
+</div>
+{% endblock %}

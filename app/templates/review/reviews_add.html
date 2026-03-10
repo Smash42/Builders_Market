@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Reviews-Add {% endblock %}
+
+{% block content %}
+<h1> Add Review</h1>
+
+ Product: {{product.product_name}}
+<form action="{{url_for('reviews.add_review', product_id = product_id)}}" method="post">
+    <label for="rating"> Product Rating: </label>
+    <input type="text" id="rating" name="rating">
+    <button type="submit" class="greenButton"> Add Rating </button>
+</form>
+
+{% endblock %}

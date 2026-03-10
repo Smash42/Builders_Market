@@ -6,16 +6,9 @@
     I want to create a smooth and seamless customer experience throughout the entire process from registering, 
     browsing products, and all the way through order delivery.
 
-# Technologies Used: 
-* Front end framework right now we just have API routes. HTML and CSS will be coming into play soon. 
-* Backend Framework: We are utilizing Flask 
-* Language: Python
-* Database: SQLite
 
-
-# Setup Instructions:
+# Setup, Start Server, View Site Instructions: 
  **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND.py need to be written as app/___.py or app/___.txt
-
  ** Should app be in the main folder then please disregard the above. 
  * Setup:
   python -m venv .venv
@@ -25,8 +18,77 @@
 * Prerequisites: Python 3.12.5, Flask, SQLite  
 * Install dependencies: pip install -r requirements.txt
 * How to configure database credentials: Database settings are stored in config/config.py
-* How to initialize the database schema: In new terminal: flask init-db
-* How to start the server: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+* How to initialize the database schema: In new terminal: flask init-db **If not in app folder : flask --app app init-db
+* 
+* How to start the server and View the Site: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+
+# Template/Pages implemented:
+## Home Page/Dashboard:
+* Guest or Unauthenticated User- home.html
+* User Dashboard- dashboard.html
+* Moderator Dashboard- dashboard_mod.html
+* Admin Dashboard- dashboard_admin.html
+
+## Admin: 
+* View all Users, admin.view_users- adminm/users.html
+* Assign/Update User Role and View User details, admin.user_detail and admin.update_user_role- admin/user_detail.html
+* Delete a User, admin.delete_user- admin/users_delete.html 
+* Edit User's information, admin.edit_user- admin/users_edit.html
+* View all Roles, admin.view_roles- admin/roles.html
+* Create a new Role, admin.create_role- admin/roles_add.html
+* View Details and Update Role Permissions, admin.update_role_permissions- admin/roles_edit.html
+* Delete a Role, admin.delete_role- admin/roles_delete.html
+* List All Permissions, admin.view_permissions- admin/permissions.html
+
+## Auth:
+* Registration for Site, auth.register- register.html
+* Login, auth.login- login.html
+* Logout. auth.logout- session clear and redirect to home.html
+* User's Profile, auth.profile- user_profile.html
+* Password Reset- 
+
+## Products:
+* Browse all available products, products.get_products- product/products_browse.html
+* Single Product Details, can add reviews if authenticated, products.product_details- product/products_detail.html
+* Create a new product, products.add_product- product/products_add.html
+* Edit an existing product, products.edit_product- product/products_edit.html
+* Delete a product, products.delete_product- product/products_delete.html
+
+## Cart:
+* Add items to Cart, cart.add_to_cart- Add to Cart button in products
+* Remove items from carts, cart.remove_from_cart- Remove button in cart view
+* View items in your cart, cart.view_cart- cart.html
+
+## Orders:
+* Create an Order, orders.create_order- Create Order Button in cart.html
+* Update order status, orders.update_order- order/orders_detail.html
+* Delete an Order, orders.delete_order- order/orders_delete.html
+* View all orders created, orders.view_orders- order/orders_all.html
+* View Single Order Details, orders.order_details- order/orders_detail.html
+ 
+## Reviews:
+* Add a Review on a Product, reviews.add_review- review/reviews_add.html
+* Edit an existing Review, reviews.edit_review- review/reviews_edit.html
+* Delete a review, reviews.delete_review- review/reviews_delete.html
+* Viewing reviews on a product, reviews.view_reviews- product/product_details.html
+* View All reviews created- reviews.view_all_reviews- review/reviews_all.html
+
+## Categories:
+* Create a new Category, category.add_category- categories/categories_add.html
+* Delete a Category, category.delete_category- categories/category_delete.html
+* View all Categories, category.view_categories- categories/categories.html
+
+
+# Browser Compatability Notes: 
+* All browsers are able to be used for viewing of Builder's Market. 
+
+
+# Technologies Used: 
+* Front end framework: HTML/CSS 
+* Backend Framework: We are utilizing Flask 
+* Language: Python
+* Database: SQLite
+
 
 # Project Structure: Folder organization
 * Auth: In here you will find the login required permission to ensure that a user is authenticated and logged in. 
@@ -40,11 +102,13 @@
     
 * Instance: Once the database is initialized, it will live here. 
     
-* Models: Empty for now
+* Models: holds class and methods for items. 
     
 * Routes: Each route has it's own file that pertains to any tasks relating to that route. 
         i.e. Products has different routes to add a new product, edit a product, delete a product, view all products, 
         and view a single produts information. 
+
+* Templates: HTML pages for site. Folders within help organize the pages. 
     
 * Utils: Holds the general error handler information for different errors that might show up. 400, 401, 403, 404, 500
     
@@ -54,57 +118,5 @@
     
 * ReadMe: Information regarding the app. 
 
-# Routes Implemented: List of all routes, organized by file
-* Admin: View Permissions, Delete a Role, Edit an existing Role, Create a new Role, View all Roles, Edit a User, Delete a User, Update User's Role, View a specific User's details, View all Users
-* Auth:  User Registration, Login, Logout, Password Reset, Password Reset confirmation. , Current User Profile
-* Cart:  Add to Cart, View Cart
-* Categories:  Add Category, Delete Category, View all Categories, View 1 Category and their associated products
-* Orders:  Create an order, Update an order, Delete an order (own vs. any with permission), View all orders (owned vs all user's orders pending permission), Order detais (owned vs any user's pending permission)
-* Products:  View all products, View one product's details, Add a new Product, Edit an existing Product, Delete a Product
-* Reviews: Add a Review, Edit a Review (owned vs any pending permission), Delete a Review (owned vs any pending permission), View Review based on a Product, View all Reviews. 
 
 
-# Testing Instructions: ThunderClient Extension in VS Code
-* Make sure you have ThunderClient Extension installed into your VS Code
-* Start the project server via the terminal with "python app.py" (Make sure you are in the app folder)
-* Click on the ThunderClient Icon on the left side (Lightning bolt in a circle)
-* Select New Request and input the URL that was given to you in your terminal 
-* Add /api/products (or orders, cart, etc. for the respective route)
-* In Body JSON insert the below so you can view content.
- {
-  "name": "John",
-  "age": 25
-}
-
-* It will automatically use the GET function, but change it to PUT, POST, DELETE to ensure all are working properly. 
-
-
-# Current Limitations: What's stubbed vs fully implemented
-* Stubbed: Auth Routes (admin role), Permisions and Authentication confirmation to ensure all routes work.
-        Adding orders, products, reviews, categories, etc is stubbed because DB wording isn't ready yet. 
-        Pulling information from the DB is stubbed right now to ensure routes work. 
-        All admin roles are stubbed right now to ensure routes are working properly. 
-
-* Fully Implemented: Connection.py is implemented. 
-        login_required is implemented to ensure 401 error is working. 
-        Logout is implemeneted with session.close()
-        Product checks for valid input fields is implemented, but creation, update, deletion from DB is not
-        Review check for valid rating input is implemeneted, but database is still in Stub
-
-
-    *Need to make reviews, orders, so that users can only view what they own, but admin or moderator can view them all. 
-    ** Maybe do this utilizeing session.user_id = review.user_id and permission review.edit.own OR permission review.edit.all 
-    ** Will be working on this. 
-
-## Addded 2/17
-* Check ZIP FILE for other* 
-* Product model
-* User Model
-* import product, browse products.py
-* Product Route- Add, Edit, Delete, Browse? Detail?
-* Auth: Login, Register
-* Admin, get all users, user by ID
-
-
-* 
-* No HTML Pages created

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Roles- Delete {% endblock %}
+
+{% block content %}
+
+<h1> Delete Role </h1>
+
+<br>
+    <p> Are you sure you want to delete <strong> {{role.role_name}}</strong> ? </p>
+    <br>
+
+<form method="POST" action="{{ url_for('admin.delete_role', role_id=role.role_id) }}">
+    <button type="submit" class="redButton">Delete</button>
+</form>
+
+{% endblock %}
