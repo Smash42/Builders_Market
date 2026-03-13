@@ -4,7 +4,7 @@
 {% block content %}
 <h1> Products </h1> 
     {% if 'product.add' in g.user.permissions %}         
-    <button class="greenButton creation" type="submit">
+    <button class="greenButton creation center1" type="submit">
             <a href="{{url_for('products.add_product')}}"> Add a Product </a>
         </button>
         <br><br>
@@ -29,10 +29,23 @@
 <!-- for product in products --> 
 {% for product in products %}
 <div class="product-card" >
-<h2> {{product.product_name}}</h2>
+<h2> {{product.product_name}}</h2> 
+<img src="{{url_for('static', filename='images/' ~ (product.image_file or 'default.jpg'))}}" class="product-browse-image">
     <p>{{product.description}}</p>
     <p>Price: $ {{product.price}}</p>
 
+    {% if 'order.add' in g.user.permissions %}
+    <form method="POST" action=" {{ url_for('cart.add_to_cart',)}}">
+        <input type="hidden" name="product_id" value="{{ product.product_id}}"> 
+        <label for="quantity">Qty: </label>
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity}}" required>
+        <button class="greenButton" type="submit">
+            Add to Cart
+        </button>
+    </form>
+    {% endif %}
+    <br>
+    <div class="prod-buttons">
         <button class="blueButton" type="submit">
             <a href="{{url_for('products.product_details', product_id = product.product_id)}}"> Details </a>
         </button>
@@ -43,32 +56,24 @@
 {% else %}
 <!-- Autheticated users  --> 
 
-    {% if 'order.add' in g.user.permissions %}
-    <form method="POST" action=" {{ url_for('cart.add_to_cart',)}}">
-        <input type="hidden" name="product_id" value="{{ product.product_id}}"> 
-        <label for="quantity">Quantity: </label>
-        <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity}}" required>
-        <button class="greenButton" type="submit">
-            Add to Cart
-        </button>
-    </form>
-    {% endif %}
+
 
     {% if 'product.edit' in g.user.permissions %}
     <button class="orangeButton">
         <a href="{{ url_for ('products.edit_product', product_id = product.product_id)}}"> 
-            Update </a>
+            Edit Product </a>
     </button>
 
     {% endif %}
+    
     {% if 'product.delete' in g.user.permissions %}
     <button class="redButton">
         <a  href="{{ url_for ('products.delete_product', product_id = product.product_id)}}"> 
-            Delete</a>
+            Delete Product</a>
     </button>
     {% endif %}
     {% endif %}
-
+    </div>
 </div>
     {% endfor %}
 

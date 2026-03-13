@@ -4,13 +4,14 @@
 {% block content %}
 
 <h1> Delete Role </h1>
-
-<br>
-    <p> Are you sure you want to delete <strong> {{role.role_name}}</strong> ? </p>
-    <br>
-
-<form method="POST" action="{{ url_for('admin.delete_role', role_id=role.role_id) }}">
-    <button type="submit" class="redButton">Delete</button>
-</form>
-
+<div class="delete-grid">
+    <h4 class="delete-q"> Are you sure you want to delete <strong> {{role.role_name}}</strong> ? </h4>
+    <div class="delete-card">
+        <p> Role ID: {{role.role_id}}</p>
+        <p> Description: {{role.description}} </p>
+        <form method="POST" action="{{ url_for('admin.delete_role', role_id=role.role_id) }}">
+            <button type="submit" class="redButton">Delete Role</button>
+        </form>
+</div>
+</div>
 {% endblock %}

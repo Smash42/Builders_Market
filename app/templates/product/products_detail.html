@@ -3,53 +3,18 @@
 
 {% block content %}
 
-<h1> Product Details </h1>
-{% if not g.user %}
-<!-- Guests only see details button  --> 
-
-{% else %}
-<!-- Autheticated users  --> 
- <!-- Add Reviews  -->
-
-      {% if 'order.add' in g.user.permissions %}
-    <form method="POST" action=" {{ url_for('cart.add_to_cart',)}}">
-        <input type="hidden" name="product_id" value="{{ product.product_id}}"> 
-        <label for="quantity">Quantity: </label>
-        <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity}}" required>
-        <button class="greenButton" type="submit">
-            Add to Cart
-        </button>
-    </form>
-    {% endif %}
-    <br>
+<h1> {{product.product_name}} </h1>
+<div class="product-detail">
 
 
-
-
-    {% if 'product.edit' in g.user.permissions %}
-    <button class="orangeButton">
-        <a href="{{ url_for ('products.edit_product', product_id=product.product_id)}}"> <!-- product_id = product.id  --> 
-            Update </a>
-    </button>
-
-    {% endif %}
-
-    {% if 'product.delete' in g.user.permissions %}
-    <button class="redButton">
-        <a  href="{{ url_for ('products.delete_product', product_id=product.product_id)}}"> <!-- product_id = product.id  --> 
-            Delete</a>
-    </button>
-    {% endif %}
-{% endif %}
-
-
-
-
-<div class="productCard">
-<h2> {{product.product_name}} </h2>
+<img src="{{url_for('static', filename='images/' ~ product.image_file)}}" class="product-image">
+<br> <br>
+<div class="product-detailCard">
     <p>Description: {{product.description}}</p>
     <p> Price: ${{product.price}}</p>
     <p> Qty: {{product.quantity}}</p>
+</div>
+<div class="product-reviewCard">
 <h3> Reviews </h3>
       {% if 'review.add' in g.user.permissions %}
     <button class="purpleButton">
@@ -58,8 +23,9 @@
     </button>
     {% endif %}
     <br><br>
+
 {% if reviews %}
-    <div class="reviewBox"></div>
+    
     {% for review in reviews %}
         <div class="review-card">
             {{review.username}}- Rating: {{review.rating }}/5
@@ -87,7 +53,41 @@
 
 </div>
 
+</div>
 
+{% if not g.user %}
+<!-- Guests only see details button  --> 
 
+{% else %}
+<!-- Autheticated users  --> 
+ <!-- Add Reviews  -->
+<div class="prod-buttons">
+      {% if 'order.add' in g.user.permissions %}
+    <form method="POST" action=" {{ url_for('cart.add_to_cart',)}}">
+        <input type="hidden" name="product_id" value="{{ product.product_id}}"> 
+        <label for="quantity">Quantity: </label>
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity}}" required>
+        <button class="greenButton" type="submit">
+            Add to Cart
+        </button>
+    </form>
+    {% endif %}
+
+    {% if 'product.edit' in g.user.permissions %}
+    <button class="orangeButton">
+        <a href="{{ url_for ('products.edit_product', product_id=product.product_id)}}"> <!-- product_id = product.id  --> 
+            Edit Product </a>
+    </button>
+
+    {% endif %}
+
+    {% if 'product.delete' in g.user.permissions %}
+    <button class="redButton">
+        <a  href="{{ url_for ('products.delete_product', product_id=product.product_id)}}"> <!-- product_id = product.id  --> 
+            Delete Product </a>
+    </button>
+    {% endif %}
+{% endif %}
+    </div>
 
 {% endblock %}

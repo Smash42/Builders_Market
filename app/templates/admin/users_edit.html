@@ -2,14 +2,25 @@
 {% block title %} User- Edit {% endblock %}
 
 {% block content %}
-<h1> Edit User </h1>
+<h1> Edit User: {{user.username}} </h1>
 
 
 <br>
-    <p>  {{user.username}} </p>
-    <p> {{user.user_id}}</p>
-    <p> {{user.email}}</p>
-    <br>
+    <form action="{{url_for('admin.edit_user', user_id = user.user_id)}}" method="post">
+        <label for="name"> Username: </label>
+        <input type="text" id="name" name="name" value="{{user.username}}">
+        <br>
+        <label for="email"> Email: </label>
+        <input type="text" id="email" name="email" value="{{user.email}}">
+        <br>
+        <br>
+        <button type="submit" class="greenButton" > Save User </button>
+
+        <button class="redButton">
+        <a  href="{{ url_for ('admin.delete_user', user_id = user.user_id)}}">  Delete User </a>
+        </button>
+    </form>
+
 
 
 {% endblock %}

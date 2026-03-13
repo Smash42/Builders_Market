@@ -19,8 +19,8 @@
     <tr>
         <td> {{ item.product.product_name }}</td>
         <td> {{item.quantity }} </td>
-        <td> {{item.product.price}}</td>
-        <td> {{item.item_total}}</td>
+        <td> $ {{item.product.price}}</td>
+        <td> $ {{item.item_total}}</td>
         <td> 
             <form method='POST' action="{{url_for('cart.remove_from_cart', product_id = item.product.product_id)}}">
             <button type="submit" class="redButton"> Remove </button>
@@ -30,9 +30,9 @@
     {% endfor %}
 </table>
 </div>
-<h2> Total: ${{ total }} </h2>
+<h2> Total: $ {{total}} </h2>
 <form method="POST" action="{{url_for('orders.create_order')}}">
-    <button type="submit" class="greenButton"> Place Order </button>
+    <button type="submit" class="greenButton"> Create Order </button>
 </form>
 {% else %}
  

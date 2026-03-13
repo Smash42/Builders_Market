@@ -64,6 +64,7 @@ CREATE TABLE products (
     description TEXT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     quantity INT NOT NULL,
+    image_file TEXT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -154,16 +155,16 @@ INSERT INTO permissions (permission_id, permission_name, description) VALUES
 INSERT INTO role_permissions (role_id, permission_id) VALUES 
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12),
 (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20), (1, 21), (1, 22), (1, 23),(1,24),
-(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2,10), (2,11), (2,13), (2,15), (2,21), (2,24),
+(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2,9), (2,10), (2,11), (2,12), (2,13), (2,14), (2,15), (2,21), (2,24),
 (3, 4), (3,5), (3,6), (3, 7), (3,9), (3, 11), (3, 12), (3, 14);
 
 /* Inserting some initial Products into the database */
-INSERT INTO products (product_id, product_name, description, price, quantity) VALUES 
-(1, 'DeWalt Miter Saw', '12 inch blade, 15 amp motor.', 349.99, 15),
-(2, 'Milwaukee Brushless Impact Drill', '18V lithium-ion battery, 1/4 inch drive.', 129.99, 50),
-(3, 'Wine Glass Bottle Holder', 'Fit two wine glasses on either side of the wine bottle with this holder', 49.99, 20),
-(4, 'Bottle Cap Plinko', 'User your bottle cap to play Plinko and see what you land in', 75.99, 12),
-(5, 'Shot Wheel', 'Spin the wheel and see what you land on', 59.99, 10);
+INSERT INTO products (product_id, product_name, description, price, quantity, image_file) VALUES 
+(1, 'DeWalt Miter Saw', '12 inch blade, 15 amp motor.', 349.99, 15, 'dewalt_miter.jpg'),
+(2, 'Milwaukee Brushless Impact Drill', '18V lithium-ion battery, 1/4 inch drive.', 129.99, 50, 'milwaukee_impact.jpg'),
+(3, 'Wine Glass Bottle Holder', 'Fit two wine glasses on either side of the wine bottle with this holder', 49.99, 20, 'wine_glass_holder.jpg'),
+(4, 'Bottle Cap Plinko', 'User your bottle cap to play Plinko and see what you land in', 75.99, 12, 'drinko_plinko.jpg'),
+(5, 'Shot Wheel', 'Spin the wheel and see what you land on', 59.99, 10, 'shot_wheel.jpg');
 
 /* Inserting some initial Categories into the database */
 INSERT INTO categories (category_id, category_name) VALUES
@@ -181,9 +182,9 @@ INSERT INTO product_categories (product_id, category_id) VALUES
 
 /* Setting up a user account, password would need to be encrypted */
 INSERT INTO users (user_id, username, email, password_hash) VALUES
-(1, 'Ashley', 'admin@test.com', 'scrypt:32768:8:1$p4fHWQaIXEH2HTMt$4e4cf6fd878639c8b982d870072d2d53312d40e21f2c3646521d7e885380f77cdd4008402518af754dc829f22f2e0af7f0119caa55e59b1e999d41f6dd3d1417!'),
-(2, 'Moderator', 'moderator@test.com', 'hashed_password_456'),
-(3, 'Test User', 'Test1@test.com', 'hashed_password_789');
+(1, 'Jack Hughes', 'njdevils@test.com', 'scrypt:32768:8:1$p4fHWQaIXEH2HTMt$4e4cf6fd878639c8b982d870072d2d53312d40e21f2c3646521d7e885380f77cdd4008402518af754dc829f22f2e0af7f0119caa55e59b1e999d41f6dd3d1417!'),
+(2, 'Aaron Rodgers', 'gopackr@test.com', 'hashed_password_456'),
+(3, 'Kelly Slater', 'surfsup@test.com', 'hashed_password_789');
 
 /* Assign role to initial users */
 INSERT INTO user_roles (user_id, role_id) VALUES

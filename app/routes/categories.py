@@ -27,7 +27,7 @@ def add_category():
     return render_template('categories/categories_add.html')
 
 #Delete a Category
-@category_bp.route('/<int:category_id>', methods=['GET', 'POST'])
+@category_bp.route('/<int:category_id>/delete', methods=['GET', 'POST'])
 @login_required
 @permission_required('category.delete')
 def delete_category(category_id):

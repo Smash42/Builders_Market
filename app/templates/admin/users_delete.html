@@ -3,18 +3,18 @@
 
 {% block content %}
 <h1> Delete User </h1>
-
-
-<br>
-    <p> Are you sure you want to delete <strong> {{user.username}}</strong> ? </p>
+<div class="delete-grid">
+    <h4 class="delete-q"> Are you sure you want to delete user: <strong> {{user.username}}</strong> ? </h4>
+    <div class="delete-card">
     <p> User ID: {{user.user_id}}</p>
     <p> User Email: {{user.email}}</p>
     <p> User Role: {{user.role}} </p>
-    <br>
+    <form method="POST" action="{{ url_for('admin.delete_user', user_id=user.user_id) }}">
+    <button type="submit" class="redButton"> Delete User </button>
+    </form>
 
-<p> Form to confirm deleteion of User in DB </p>
-<form method="POST" action="{{ url_for('admin.delete_user', user_id=user.user_id) }}">
-    <button type="submit" class="redButton">Delete</button>
-</form>
+    </div>
+</div>
+
 
 {% endblock %}

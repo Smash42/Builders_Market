@@ -9,13 +9,16 @@
 <h2> Username: {{user.username}}</h2>
     <p>User ID: {{user.user_id}}</p>
     <p>Role: {{user.role}}</p>
-
+    <div class="left">
         <button class="blueButton" type="submit">
             <a href="{{url_for('admin.user_detail', user_id=user.user_id)}}"> Details </a>
         </button>
+    </div>
+    <div class="right">
         <button class="redButton">
         <a  href="{{ url_for ('admin.delete_user', user_id = user.user_id)}}">  Delete</a>
     </button>
+    </div>
 
 </div>
 {% endfor %}

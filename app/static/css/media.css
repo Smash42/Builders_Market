@@ -6,12 +6,38 @@
         width: 90%;
     }
 
+    main {
+    flex: 1;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    }
+
+    /*columns */
+    .left {
+        width: 80%;
+        display: block;
+
+    }
+
+    .right {
+        width: 80%;
+        display: block;
+    }
+
+    /*main */
+
+    #logo {
+        font-size:x-large;
+        text-align: center;
+        }
+
 
     h1 {
         text-align: center;
         font-size: 1.5em;
         width: 95%;
-        margin: 1px;
+        margin: 0.5em;
+        margin-top: 1em;
     }
     #hamburger {
         display: block;
@@ -38,24 +64,34 @@
         display: block;
     }
     
+    /* buttons */
+    .prod-buttons  {
+    display: block;
+    margin: auto;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    }
+
     .authButton {
         float: unset;
     }
 
     .authButton button {
         height: 2.2em;
-
     }
 
     button {
-        height: 2.2em;
+        min-height: 2.2em;
+        max-height: max-content;
+        min-width: fit-content;
         padding: 5px;
     }
     .creation {
     height: 40px;
     width: 30%;
     justify-content: center;
-}
+    }
+
     .dashboard-grid {
         display: grid;
         flex-direction: column;
@@ -84,8 +120,8 @@
         text-align: center;
         margin: 2px;
         overflow-wrap: break-word;
-
     }
+
     .product-card button {
         display: flex-wrap;
         height: 30px;

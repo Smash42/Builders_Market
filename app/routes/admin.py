@@ -86,7 +86,7 @@ def edit_user(user_id):
         
         user = User.UpdateUser(user_id, name, email)
     #Get updated user info from form, validate info, if valid update user in DB. 
-    return redirect('admin/users_edit.html', user_id=user_id, user = user)
+    return render_template('admin/users_edit.html', user_id = user_id, user = user)
 
    
 #Delete User

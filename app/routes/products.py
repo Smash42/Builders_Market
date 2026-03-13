@@ -1,4 +1,7 @@
-from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
+import os
+
+from flask import Blueprint, abort, current_app, flash, g, redirect, render_template, request, url_for
+from werkzeug.utils import secure_filename
 from auth.auths import login_required
 from auth.permissions import permission_required
 from database.connection import get_connection
@@ -51,6 +54,9 @@ def add_product():
     description = request.form.get('description').strip()
     price = request.form.get('price').strip()
     quantity = request.form.get('quantity').strip()
+    image = request.files['image']
+
+    filename = None
 
     #Validate required fields
     if not name:
@@ -77,13 +83,19 @@ def add_product():
     except (ValueError, TypeError):
         hasError = True
         flash('Quantity must be a valid whole number.')
+
+    if image and image.filename != "":
+        filename = secure_filename(image.filename)
+        image_path = os.path.join(
+            current_app.root_path, "static/images", filename
+        )
     
     if hasError:
         return render_template('product/products_add.html')
     
     # ADD Product to Database, data.....
     if not hasError:
-        product = ProductItem.Create(name, description, price, quantity) 
+        product = ProductItem.Create(name, description, price, quantity, filename) 
         flash("Product created successfully")
         return redirect(url_for('products.product_details', product_id=product.product_id))
 
@@ -158,7 +170,7 @@ def edit_product(product_id):
     
     return render_template('products_edit.html', product = info, categories = categories)
 
-# Delete a product  CHECK METHOD
+# Delete a product 
 @products_bp.route('/<int:product_id>/delete', methods=['GET','POST'])
 @login_required 
 @permission_required('product.delete')

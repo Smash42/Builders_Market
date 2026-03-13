@@ -2,9 +2,9 @@
 {% block title %} Order Details {% endblock %}
 
 {% block content %}
-<h1> Order {{order.order_id}} Details </h1>
+<h1> Order Details, Order: {{order.order_id}}  </h1>
 
-<p:> User: {{order.username}}     </p>   
+<p> User: {{order.username}}</p>   
     <p>Total: $ {{order.total}} </p>
     <p> Order Created: {{order.created_at }} <p> Order Updated: {{order.updated_at}} </p> </p>
 <p> Status: {{order.status}}</p>
@@ -17,7 +17,7 @@
         <option value="completed">Completed</option>
         <option value="cancelled">Cancelled</option>
     </select>
-    <button type="submit">Update Status</button>
+    <button type="submit" class="orangeButton">Update Status</button>
 </form>
 {% endif %}
 
@@ -26,10 +26,12 @@
 <table class="order-table">
     <thead>
     <tr> 
+        <th> Order Item ID</th>
         <th> Product</th>
+        <th> Product ID </th>
         <th> Quantity</th>
-        <th> Price </th>
-        <th> Total </th>
+        <th> Purchase Price </th>
+        <th>  Item Total </th>
 
     </tr>
     </thead>
@@ -37,7 +39,9 @@
     <tbody>
     {% for item in items %}
     <tr>
+        <td> {{ item.order_item_id}} </td>
         <td> {{ item.product_name }}</td>
+        <td> {{item.product_id}}</td>
         <td> {{item.quantity }} </td>
         <td> $ {{item.price}}</td>
         <td> $ {{item.item_total}}</td>
@@ -46,6 +50,15 @@
     </tbody>
 </table>
 </div>
+    <br>
+    {% if 'order.delete.own' in g.user.permissions %}
+     {% if 'order.delete.all' in g.user.permissions %}
+    <button class="redButton delete-grid">
+        <a  href="{{ url_for ('orders.delete_order', order_id= order.order_id)}}"> <!-- product_id = product.id  --> 
+            Delete</a>
+    </button>
+    {% endif %}
+    {% endif %}
 
 
 

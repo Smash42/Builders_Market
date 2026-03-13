@@ -5,12 +5,19 @@
 
 <h1> Update an Existing Role </h1>
 
-<h4> Role: {{role.role_name}} </h4>
-<p> Permissions: 
+
+<h1> Role: {{role.role_name}} </h1>
+        <button class="redButton center1">
+            <a  href="{{ url_for ('admin.delete_role', role_id = role.role_id)}}"> 
+            Delete Role</a>
+        </button>
+<div class="left">
+<p> Current Permissions: 
     <ul>
     {% for permission in role.permissions %} <li>{{permission.permission_name}}</li> {% endfor %}</p>
     </ul>
-
+</div>
+<div class="right">
     <h4> Assign or Update Role Permissions</h4>
 <form method="POST" action="{{ url_for('admin.update_role_permissions', role_id=role.role_id) }}">
     {% set role_perm_ids = role.permissions | map(attribute='permission_id') | list %}
@@ -23,8 +30,9 @@
             </option>
         {% endfor %}
     </select>
-    <br>
-    <button type="submit"  class="greenButton"> Save </button>
+    <br><br>
+    <button type="submit"  class="orangeButton"> Update </button>
 </form>
+</div>
 
 {% endblock %}

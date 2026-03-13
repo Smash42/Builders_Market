@@ -4,19 +4,21 @@
 {% block content %}
 
 
-
-<table >
+<h1> Permissions</h1>
+<table class="perm-table">
     <thead>
         <tr>
-            <th><h3>Permission Name </h3></th>
-            <th> <h3>Description </h3></th>
+            <th><h3> Perm. ID </h3></th>
+            <th><h3> Permission Name </h3></th>
+            <th> <h3> Description </h3></th>
         </tr>
     </thead>
 
     <tbody>
         {% for permission in permissions %}
         <tr>
-            <td> <h3>{{permission.permission_name}}</h3></td>
+            <td><h4>{{permission.permission_id}}  </h4></td>
+            <td> <h4>{{permission.permission_name}}</h4></td>
 
             <td> {{permission.description}} </td>
         </tr>

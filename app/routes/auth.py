@@ -54,7 +54,7 @@ def register():
         flash("User registered successfully")
         return redirect(url_for('auth.login'))
     
-    return render_template('register.html')
+    return render_template('auth/register.html')
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -87,7 +87,7 @@ def login():
         # if valid, store user info in session to keep them logged in    
         return redirect(url_for('home'))
     
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 @auth_bp.route('/logout', methods=['GET'])
 @login_required
@@ -101,18 +101,24 @@ def logout():
 def profile():
     user = User.FromID(session['user_id'])
     #Show users profile information, username, email, role, and other relevant information. 
-    return render_template('user_profile.html', user=user)
+    return render_template('auth/user_profile.html', user=user)
 
 #password reset route
-@auth_bp.route('/password-reset', methods=['POST'])
+@auth_bp.route('/password-reset', methods=['GET', 'POST'])
 def password_reset():
-    #Stub for now to ensure that all routes are working properly.
-    #Get email from form, check if email is in DB, if so send password reset instructions to email. 
-    flash({'success': True, 'message': 'POST /api/auth/password-reset Route. Password reset instructions sent successfully'}), 200
+
+    if request.method == 'POST':
+        email = request.form.get('email').strip()
+        user = User.FromEmail(email)
+
+    if user:
+        flash('password reset')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/password_reset.html')
 
 #password reset confirmation route
-@auth_bp.route('/password-reset/confirm', methods=['POST'])
+@auth_bp.route('/password-reset/confirm', methods=['GET','POST'])
 def password_reset_confirm():
     #Stub for now to ensure that all routes are working properly.
     #Get new password and token from form, validate token, if valid update password in DB. 
-    flash({'success': True, 'message': 'POST /api/auth/password-reset/confirm Route. Password reset successful'}), 200
+    return render_template('auth/password_reset_confirm.html')

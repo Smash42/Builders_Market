@@ -2,9 +2,10 @@ from database.connection import get_connection
 
 
 class Role:
-    def __init__(self, role_id, role_name, permissions = None ):
+    def __init__(self, role_id, role_name, description, permissions = None ):
         self.role_id = role_id
         self.role_name = role_name
+        self.description = description
         self.permissions = permissions or []
 
 
@@ -51,7 +52,7 @@ class Role:
         db = get_connection()
         try: 
             row = db.execute("""
-                             SELECT r.role_id, r.role_name
+                             SELECT r.role_id, r.role_name, r.description
                              FROM roles r 
                              WHERE r.role_id = ?
                              """, (role_id,)).fetchone()
@@ -75,6 +76,7 @@ class Role:
             role =  Role(
                 role_id=row["role_id"],
                 role_name=row['role_name'],
+                description = row['description'],
                 permissions=permission_list
             )
         

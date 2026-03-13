@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block title %} Login{% endblock %}
+
+
+{% block content %}
+
+<h1> Login </h1>
+<br>
+<div class="auth-grid">
+    <div class="auth-card">
+        <p> Enter your credentials to login </p>
+        <form action="{{url_for('auth.login')}}" method="post">
+
+            <label for="email"> Email: </label>
+            <input type="text" id="email" name="email" required>
+            <br><br>
+            <label for="password"> Password: </label>
+            <input type="password" id="password" name="password" style="width: 130px;" required>
+            <br><br>
+            <div class="auth-card-button">
+            <button type="submit" class="greenButton"> Login </button>
+            <button class="orangeButton"> 
+                <a href="{{url_for('auth.password_reset')}}" > Forgot Password  </a></button>
+            </div>
+                <br>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

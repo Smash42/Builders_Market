@@ -2,14 +2,18 @@
 {% block title %} Category- Delete {% endblock %}
 
 {% block content %}
-<h1> Delete Product</h1>
+<h1> Delete Category</h1>
 
 <br>
-    <p> Are you sure you want to delete <strong> {{category.category_name}} </strong> ? </p>
+<div class="delete-grid">
+    <div class="delete-card">
+    <p class="delete-q"> Are you sure you want to delete the category: <strong> {{category.category_name}} </strong> ? </p>
     <br>
-
-<form method="POST" action="{{ url_for('category.delete_category', category_id=category.category_id) }}">
-    <button type="submit" class="redButton">Delete</button>
-</form>
+    
+    <form method="POST" action="{{ url_for('category.delete_category', category_id=category.category_id) }}">
+        <button type="submit" class="redButton">Delete</button>
+    </form>
+</div>
+</div>
 
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block title %} Reviews- Edit {% endblock %}
 
 {% block content %}
-<h1> Update Review</h1>
+<h1> Edit Review</h1>
 
 <p> Product: {{product.product_name}} </p>
 <form action="{{url_for('reviews.edit_review', product_id = review.product_id, review_id = review.review_id)}}" method="post">
@@ -10,5 +10,11 @@
     <input type="text" id="rating" name="rating" value="{{review.rating}}">
     <button type="submit" class="greenButton"> Update Rating </button>
 </form>
-
+<br>
+                {% if review.user_id == g.user.user_id or 'review.delete.all' in g.user.permissions %}
+                <button class="redButton">
+                    <a href="{{ url_for ('reviews.delete_review', review_id = review.review_id, product_id = product.product_id)}}"> <!-- product_id = product.id  --> 
+                            Delete Review </a>
+                </button>
+                {% endif %}
 {% endblock %}

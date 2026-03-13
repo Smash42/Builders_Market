@@ -3,19 +3,21 @@
 
 {% block content %}
 <h1> Delete Product </h1>
+<div class="delete-grid">
+    <h4 class="delete-q"> Are you sure you want to delete <strong> {{product.product_name}} </strong> ? </h4>
+    <div class="delete-card">
+        <p> Description: {{product.description}}</p>
+        <p> Price: $ {{product.price}}</p>
+        <br>
 
-
-<br>
-    <p> Are you sure you want to delete <strong> {{product.product_name}} </strong> ? </p>
-    <p> Description: {{product.description}}</p>
-    <p> $ {{product.price}}</p>
-    <br>
-
-<form method="POST" action="{{ url_for('products.delete_product', product_id=product.product_id) }}">
-    <button type="submit" class="redButton">Delete</button>
-</form>
-<br>
-        <button class="greenButton" type="submit">
+        <form method="POST" action="{{ url_for('products.delete_product', product_id=product.product_id) }}">
+            <button type="submit" class="redButton">Delete Product</button>
+        </form>
+    </div>
+<br><br>
+        <button class="orangeButton" type="submit">
             <a href="{{url_for('products.product_details', product_id=product.product_id)}}"> Cancel </a>
         </button>
+
+</div>
 {% endblock %}

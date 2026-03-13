@@ -4,11 +4,11 @@
 
 {% block content %}
 
-<h2>Welcome Back, Administrator: {{ g.user.username }}!</h2>
+<h1>Welcome Back, Moderator: {{ g.user.username }}!</h1>
 
 <div class="dashboard-grid">
 
-    <button class="greenButton">
+    <button class="blueButton">
         <a href="{{ url_for('orders.view_orders') }}" > My Orders </a>
     </button>
 
@@ -16,11 +16,11 @@
         <a href="{{ url_for('reviews.view_all_reviews') }}" > Reviews </a>
     </button>
 
-    <button>
-        <a href="{{ url_for('products.get_products') }}" class="greenButton"> Products </a>
+    <button class="orangeButton">
+        <a href="{{ url_for('products.get_products') }}"> Products </a>
     </button>
 
-    <button class="purpleButton">
+    <button class="yellowButton">
         <a href="{{ url_for('category.view_categories') }}" > Categories </a>
     </button>
 

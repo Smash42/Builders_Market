@@ -39,7 +39,7 @@ def create_order():
 
             item_total = product.price * quantity
             total += item_total
-
+            total = round(total,2)
             order_items.append({
                 "product": product, 
                 "quantity": quantity
@@ -112,6 +112,7 @@ def update_order(order_id):
 @permission_required('order.delete.own')
 def delete_order(order_id):
     order = Order.GetByID(order_id)
+    items = OrderItem.GetByOrder(order_id)
     if order is None: 
         abort(404)
     
@@ -119,10 +120,11 @@ def delete_order(order_id):
         if g.user.role not in ["Admin", "Moderator"]:
             if order["user_id"] != g.user.user_id:
                 abort(403)
+
         Order.Delete(order_id)
         flash("Order deleted successfully")
         return redirect(url_for('orders.view_orders'))
-    return render_template('order/orders_delete.html', order = order)
+    return render_template('order/orders_delete.html', order = order, items = items)
 
 
 
@@ -135,6 +137,7 @@ def view_orders():
         orders = Order.GetAll()
     else: 
         orders = Order.GetByUser(g.user.user_id)
+
     
     return render_template("order/orders_all.html", orders=orders)
 

@@ -8,19 +8,24 @@
 
 
 # Setup, Start Server, View Site Instructions: 
- **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND.py need to be written as app/___.py or app/___.txt
- ** Should app be in the main folder then please disregard the above. 
+        **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
+        ** Should app be in the main folder then please disregard the above. 
  * Setup:
   python -m venv .venv
   .venv\Scripts\activate (on Windows)
   pip install -r requirements.txt
-
 * Prerequisites: Python 3.12.5, Flask, SQLite  
 * Install dependencies: pip install -r requirements.txt
 * How to configure database credentials: Database settings are stored in config/config.py
 * How to initialize the database schema: In new terminal: flask init-db **If not in app folder : flask --app app init-db
-* 
-* How to start the server and View the Site: In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+*     
+## How to start the server and View the Site: 
+* In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+* If you are using my already initialized database: 
+        admin user- admin1@test.com, Abc123!
+        moderator user- blackpearl@test.com Abc123!
+        regular user- john@test.com Abc123!
+* If you are deleting and initializing a new database. The first user will be given the role Admin. 
 
 # Template/Pages implemented:
 ## Home Page/Dashboard:

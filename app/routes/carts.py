@@ -61,8 +61,9 @@ def view_cart():
     for product_id, quantity in cart.items():
         product= ProductItem.FromDB(int(product_id))
         if product:
-            item_total = product.price * quantity
+            item_total = round(product.price * quantity, 2)
             total += item_total
+            total = round(total,2)
 
             cart_items.append({
                 'product': product, 

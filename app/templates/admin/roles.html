@@ -3,17 +3,18 @@
 
 {% block content %}
 <h1> Roles </h1>
-        <button class="greenButton creation" type="submit">
-            <a href="{{url_for('admin.create_role')}}"> Add a New Role </a>
+        <button class="greenButton creation center1" type="submit">
+            <a href="{{url_for('admin.create_role')}}"> Create a New Role </a>
         </button>
 <br> <br>
 <div class="role-grid">
 {% for role in roles %}
-<div class="role-card" >
+<div class="role-card center1" >
 <h2> {{role.role_name}}</h2>
     <p>Role ID: {{role.role_id}}</p>
+    
 
-
+    <div class="prod-buttons">
         <button class="orangeButton" type="submit">
             <a href="{{url_for('admin.update_role_permissions', role_id=role.role_id)}}"> Update Role Permissions </a>
         </button>
@@ -21,6 +22,7 @@
             <a  href="{{ url_for ('admin.delete_role', role_id = role.role_id)}}"> 
             Delete</a>
         </button>
+    </div>
 </div>
 {% endfor %}
 </div>

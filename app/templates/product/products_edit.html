@@ -2,11 +2,10 @@
 {% block title %} Product Update {% endblock %}
 
 {% block content %}
-<h1> Edit Product </h1>
+<h1> Edit a Product </h1>
 
 <!-- for product in products --> 
 
-<p> Form to update Product in DB </p>
 <p></p>
 <form action="{{url_for('products.edit_product', product_id=product.product_id)}}" method="post">
     <label for="name"> Product Name: </label>
@@ -29,6 +28,7 @@
         </option>
         {% endfor %}
     </select>
+    <br>
     <button type="submit" class="greenButton"> Save </button>
 </form>
 

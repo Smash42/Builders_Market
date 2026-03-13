@@ -1,17 +1,28 @@
 
+html, body {
+    height: 99%;
+}
 header {
     background-color: rgba(0, 128, 128, 0.925);
     color: white;
     padding: 5px;
     text-align: center; 
-
 }
 
 header a {
     color: white;
 }
 body {
+    display: flex;
+    flex-direction: column;
     background-color: antiquewhite;
+    min-height: 98.5vh;
+
+}
+main {
+    flex: 1;
+    margin-left: 5em;
+    margin-right: 5em;
 }
 footer {
     background-color: rgb(37, 37, 37);
@@ -33,11 +44,18 @@ footer {
 
 .authButton Button {
     width: 7em;
+    height: 3em;
+
 }
 
 #logo {
  font-size:x-large;
  text-align: left;
+}
+
+.home-page, .home-page h1 {
+    text-align: center;
+    align-items: center;
 }
 h1 {
     text-align: center;
@@ -45,6 +63,50 @@ h1 {
 
 a {
     color: white;
+}
+
+/* columns */
+
+.left {
+    width: 40%;
+    display: block;
+    float: left;
+    text-align: center;
+
+
+}
+.right {
+    width: 40%;
+    display: block;
+    float: right;
+    text-align: center;
+}
+.left li {
+    float: right;
+    width: 60%;
+    list-style-position: inside ;
+    text-align: left;
+}
+
+/* Buttons */
+button {
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: rgb(255, 255, 255);
+    border-style: double ;
+    height: 3em;
+}
+button:hover{
+    font-weight: bold;
+    border-color: rgb(209, 255, 207);
+    border-style: groove;
+}
+
+.center1 {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
 }
 
 .greenButton {
@@ -70,22 +132,49 @@ a {
 .yellowButton {
     background-color: rgb(233, 214, 44);
 }
-button {
-    border-radius: 4px;
-    border-width: 3px;
-    border-color: rgb(255, 255, 255);
+.tealButton {
+    background-color: teal;
 }
-button:hover{
-    font-weight: bold;
-    border-color: rgb(209, 255, 207);
-}
+
 
 .creation {
     height: 40px;
     width: 20%;
-    justify-content: center;
+}
+.creation button {
+    align-items: center;
 }
 
+/* Auth */
+.auth-grid {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+.auth-card {
+    display: inline-block;
+    border: 2px black solid;
+    padding: 1.5em;
+    margin: auto;
+    text-align: right;
+}    
+
+.auth-card-button {
+    text-align: center;
+}
+.auth-card-button button {
+    text-align: center;
+    height: 2em;
+    
+}
+.auth-card p {
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+
+/* Dashboards */
 .dashboard-grid {
     margin-left: 50px;
     justify-content: center;
@@ -101,7 +190,7 @@ button:hover{
     border-color: black;
 }
 
-
+/* Order Product Role User: grid/cards */
 .order-detail {
    margin: 3px;
 }
@@ -109,11 +198,11 @@ button:hover{
     justify-content: space-between;
     margin: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2em;
 }
 
-.product-card, .user-card, .role-card, .category-card{
+.product-card, .user-card, .category-card {
     display: inline-block;
     padding: 5px;
     border: 2px solid black;
@@ -124,19 +213,136 @@ button:hover{
     text-align: center;
 }
 
+.product-detail {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+
+.product-detailCard {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+    text-align: left;
+    overflow-wrap:normal;
+}
+.product-reviewCard {
+    display: block;
+    padding: 5px;
+    border: 2px solid black;
+    text-align: left;
+    overflow-wrap:normal;
+}
+
+.prod-buttons  {
+    display:flex ;
+    width: 100%;
+    justify-content: space-between;
+
+    }
+
+/* Images */
+.product-browse-image{
+    width:150px;
+    height:150px;
+    display: block;
+    margin: auto;
+
+}
+.product-image{
+    width:250px;
+    height:250px;
+
+}
+
+/* Order/Cart Tables */
 
 .order-table-container {
     display: flex;
     justify-content: center;
 }
 .order-table {
-    border: 2px black;
+    border: 2px black solid;
 }
 .order-table th {
     font-size: 18px;
 }
-.order-table th, td {
+.order-table th,  .order-table td {
     padding: 2px;
-    border: 2px solid black;
+    border-bottom: 3px solid black;
+    border-right: 1px black solid;
     text-align: center;
+}
+
+/* Reviews */
+.review-table {
+    border: 2px black solid;
+    margin: auto;
+}
+.review-table th, .review-table td {
+    padding: 2px;
+    border-bottom: 3px solid black;
+    border-right: 1px black solid;
+    text-align: center;
+}
+
+
+/* Other */
+
+.delete-q {
+    text-align: center;
+}
+.delete-grid {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+.delete-card {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+.delete-card form {
+    text-align: center;
+}
+/* Admin Specific */
+
+/* Roles */
+.role-grid {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+    justify-content: space-between;
+    
+    align-items: center;
+}
+
+.role-card {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+
+/* permissions */
+.perm-table {
+    border: 2px black solid;
+    margin: auto;
+}
+.perm-table th {
+    border-bottom: 2px black solid;
+    border-right: 1px black dashed ;
+    padding: 4px;
+}
+.perm-table td {
+    border-bottom: 2px black solid;
+    border-right: 1px black dashed;
+    text-align: center;
+    padding: 0px;
 }

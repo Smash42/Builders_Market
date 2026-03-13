@@ -3,12 +3,13 @@ from database.connection import get_connection
 from models.categories import Category
 
 class ProductItem:
-    def __init__(self, product_id, name, description, price, quantity):
+    def __init__(self, product_id, name, description, price, quantity, image_file):
         self.product_id = product_id
         self.product_name = name
         self.description = description
         self.price = price
         self.quantity = quantity
+        self.image_file = image_file
 
 # Update product 
     def UpdateDatabase(self):
@@ -41,13 +42,13 @@ class ProductItem:
 
 # Create New Product
     @staticmethod
-    def Create(name, description, price, quantity):
+    def Create(name, description, price, quantity, image_file):
         db = get_connection()
         try:
             cursor = db.execute("""
-                INSERT INTO products (product_name, description, price, quantity)
-                VALUES (?, ?, ?, ?)
-                """, (name, description, price, quantity))
+                INSERT INTO products (product_name, description, price, quantity, image_file)
+                VALUES (?, ?, ?, ?, ?)
+                """, (name, description, price, quantity, image_file))
 
             product_id = cursor.lastrowid
             db.commit()
@@ -81,7 +82,8 @@ class ProductItem:
             name=row['product_name'],
             description=row['description'],       
             price=row['price'],
-            quantity= row['quantity']
+            quantity= row['quantity'],
+            image_file = row['image_file']
         )
 
     @staticmethod  

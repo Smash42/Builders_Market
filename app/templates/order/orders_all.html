@@ -9,16 +9,12 @@
 {% for order in orders %}
 <div class="product-card" >
 <h2> Order number: {{order.order_id}}</h2>
+<p> User ID: {{order.user_id}}</p>
     <p>Status: {{order.status}}</p>
     <p>Total: ${{order.total}}</p>
 
-{% if not g.user %}
-<!-- Guests only see details button  --> 
 
-
-{% else %}
-<!-- Autheticated users  --> 
-
+    <div class="prod-buttons">
         <button class="blueButton" type="submit">
             <a href="{{url_for('orders.order_details', order_id=order.order_id)}}"> Details </a>
         </button>
@@ -39,8 +35,8 @@
     </button>
     {% endif %}
     {% endif %}
+    </div>
 
-    {% endif %}
 
 
 </div>
