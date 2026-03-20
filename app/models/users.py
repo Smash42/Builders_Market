@@ -1,4 +1,6 @@
-from flask import flash, g
+
+from datetime import datetime
+
 from database.connection import get_connection
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -11,6 +13,7 @@ class User:
         self.password_hash = password_hash
         self.role = role
         self.permissions = permissions or []
+
     
     def CheckPassword(self, password):
         return check_password_hash(self.password_hash, password)
@@ -107,9 +110,9 @@ class User:
         try:
             db.execute("""
             UPDATE users
-            SET username = ?, email = ?
+            SET username = ?, email = ?, updated_at = ?
             WHERE user_id = ?
-        """, (name, email, user_id))
+        """, (name, email, user_id, datetime.utcnow()))
             db.commit()
             return User.FromID(user_id)
     
@@ -133,6 +136,12 @@ class User:
                        INSERT INTO user_roles (user_id, role_id)
                        VALUES (?, ?)
                        """,(user_id, role_id))
+            
+            db.execute("""
+                UPDATE users
+                SET  updated_at = ?
+                WHERE user_id = ?
+                """, (datetime.utcnow(), user_id ))
             
             db.commit()
         finally:
@@ -188,5 +197,27 @@ class User:
 
             
             return User._BuildUser(row, db)
+        finally:
+            db.close()
+
+    @staticmethod
+    def isActive(user_id):
+        db = get_connection()
+        try: 
+            db.execute("""
+                            UPDATE users SET is_active = 1 WHERE user_id = ?
+                             """, (user_id,))
+            db.commit()
+        finally:
+            db.close()
+
+    @staticmethod
+    def isInactive(user_id):
+        db = get_connection()
+        try: 
+            db.execute("""
+                            UPDATE users SET is_active = 0 WHERE user_id = ?
+                             """, (user_id,))
+            db.commit()
         finally:
             db.close()

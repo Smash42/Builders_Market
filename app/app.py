@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from flask import Flask, redirect, render_template, session, g, url_for
 
 from models.users import User
@@ -19,6 +21,8 @@ def create_app():
 
     #Load configuration
     app.config.from_object('config.config.Config')
+
+    app.config['PERMANENT_SESSION_KEY'] = timedelta(hours=24)
 
     #Register CLI command to initialize DB
     app.cli.add_command(init_db_command)

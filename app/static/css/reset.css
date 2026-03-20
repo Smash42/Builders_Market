@@ -1,0 +1,290 @@
+/*Main layouts */
+html, body {
+    height: 99%;
+}
+header {
+    background-color: rgba(0, 128, 128, 0.925);
+    color: white;
+    padding: 5px;
+    text-align: center; 
+}
+
+header a {
+    color: white;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite;
+    min-height: 98.5vh;
+
+}
+main {
+    flex: 1;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+footer {
+    background-color: rgb(37, 37, 37);
+    color: white;
+}
+
+#hamburger {
+    display: none;
+}
+
+#navMenu a {
+    text-decoration: none;
+}
+
+.authButton {
+    display: flexbox;
+    float: right;
+}
+
+.authButton Button {
+    width: 7em;
+    height: 3em;
+}
+
+#logo {
+ font-size:x-large;
+ text-align: left;
+}
+
+.home-page, .home-page h1 {
+    text-align: center;
+    align-items: center;
+}
+h1 {
+    text-align: center;
+}
+
+a {
+    color: white;
+}
+
+
+/* Buttons */
+button {
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: rgb(255, 255, 255);
+    border-style: double ;
+    height: 3em;
+}
+button:hover{
+    font-weight: bold;
+    border-color: rgb(209, 255, 207);
+    border-style: groove;
+}
+
+.center1 {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+
+.greenButton {
+    background-color: green;
+    color: white;
+}
+.blueButton {
+    background-color: rgb(59, 121, 255);
+}
+.redButton {
+    background-color: rgba(255, 0, 0, 0.74);
+}
+.orangeButton {
+    background-color: orange;
+}
+.pinkButton {
+    background-color: rgb(252, 143, 161);
+}
+
+.purpleButton {
+    background-color: rgb(168, 108, 247);
+}
+.yellowButton {
+    background-color: rgb(233, 214, 44);
+}
+.tealButton {
+    background-color: teal;
+}
+.creation {
+    height: 40px;
+    width: 20%;
+}
+.creation button {
+    align-items: center;
+}
+
+/* Auth */
+.auth-grid {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+.auth-card {
+    display: inline-block;
+    border: 2px black solid;
+    padding: 1.5em;
+    margin: auto;
+    text-align: right;
+}    
+
+.auth-card-button {
+    text-align: center;
+}
+.auth-card-button button {
+    text-align: center;
+    height: 2em;
+    
+}
+.auth-card p {
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+
+/* Dashboards */
+.dashboard-grid {
+    margin-left: 50px;
+    justify-content: center;
+}
+.dashboard-grid button {
+    justify-content: space-between;
+    font-size: larger;
+    border-radius: 10px;
+    border-width: 4px;
+    border-color: black;
+}
+
+/* Order Product Role User: grid/cards */
+.order-detail {
+   margin: 3px;
+}
+.product-grid, .order-grid, .user-grid{
+    justify-content: space-between;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+}
+
+.product-card, .user-card, .category-card {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+.product-card h2  {
+    text-align: center;
+}
+
+.product-detail {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+
+.product-detailCard {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+    text-align: left;
+    overflow-wrap:normal;
+}
+.product-reviewCard {
+    display: block;
+    padding: 5px;
+    border: 2px solid black;
+    text-align: left;
+    overflow-wrap:normal;
+}
+
+.prod-buttons  {
+    display:flex ;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+/* Images */
+.product-browse-image{
+    width:150px;
+    height:150px;
+    display: block;
+    margin: auto;
+
+}
+.product-image{
+    width:250px;
+    height:250px;
+
+}
+
+/* Order/Cart Tables */
+
+.order-table-container {
+    display: flex;
+    justify-content: center;
+}
+.order-table {
+    border: 2px black solid;
+}
+.order-table th {
+    font-size: 18px;
+}
+.order-table th,  .order-table td {
+    padding: 2px;
+    border-bottom: 3px solid black;
+    border-right: 1px black solid;
+    text-align: center;
+}
+
+
+
+/* Other */
+
+.delete-q {
+    text-align: center;
+}
+.delete-grid {
+    text-align: center;
+    grid-template-columns: 1fr;
+    margin: auto;
+    display: block;
+}
+.delete-card {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid black;
+}
+.delete-card form {
+    text-align: center;
+}
+/* Admin Specific */
+
+/* Roles */
+.role-grid {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.role-card {
+    display: inline-block;
+}
+
+/* permissions */
+.perm-table {
+    border: 2px black solid;
+    margin: auto;
+}
+

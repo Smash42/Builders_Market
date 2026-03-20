@@ -66,10 +66,10 @@
     
     /* buttons */
     .prod-buttons  {
-    display: block;
-    margin: auto;
-    grid-template-columns: 1fr 1fr;
-    justify-content: space-between;
+        display: block;
+        margin: auto;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
     }
 
     .authButton {
@@ -81,17 +81,33 @@
     }
 
     button {
-        min-height: 2.2em;
+        min-height: 3em;
         max-height: max-content;
         min-width: fit-content;
         padding: 5px;
     }
     .creation {
-    height: 40px;
-    width: 30%;
-    justify-content: center;
+        height: 40px;
+        width: 30%;
+        justify-content: center;
     }
 
+    .product-card button {
+        display: flex-wrap;
+        height: 30px;
+        width: 30%;
+    }
+
+    .user-card button {
+        height: 30px;
+        width: 40%;
+    }
+    .role-card button {
+        height: 40px;
+        width: 40%;
+    }
+
+    /* Grid/layouts */
     .dashboard-grid {
         display: grid;
         flex-direction: column;
@@ -101,8 +117,8 @@
     }
 
     .dashboard-grid button {
-        width: 12em;
-        height: 5em;
+        width: 14em;
+        height: 14px;
         font-size: large;
     }
 
@@ -122,20 +138,30 @@
         overflow-wrap: break-word;
     }
 
-    .product-card button {
-        display: flex-wrap;
-        height: 30px;
-        width: 30%;
+        /* Delete Page */
+
+    .delete-q {
+        text-align: center;
+    }
+    .delete-grid {
+        display: block;
+        text-align: center;
+        grid-template-columns: 1fr;
+        margin: auto;
+    }
+    .delete-card {
+        display: inline-block;
+        padding: 5px;
+        border: 2px solid black;
+        text-align: left;
+        overflow-wrap: break-word;
+        margin: auto;
+    }
+    .delete-card form {
+        text-align: center;
     }
 
-    .user-card button {
-        height: 30px;
-        width: 40%;
-    }
-    .role-card button {
-        height: 40px;
-        width: 40%;
-    }
+    /* footer */
 
     footer {
         order: 100;
