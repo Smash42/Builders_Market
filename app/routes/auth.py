@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from flask import Blueprint, app, flash, redirect, render_template, request, session, url_for
-from auth.auths import login_required
+from flask import Blueprint, app, flash, g, redirect, render_template, request, session, url_for
+from auth.auths import require_auth
 from models.users import User
 import logging
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -71,8 +71,6 @@ def register():
         if hasError:
             return render_template('auth/register.html')
 
-        
-
         User.Create(name, email, password)
         flash("User registered successfully")
         return redirect(url_for('auth.login'))
@@ -90,19 +88,17 @@ def login():
 
         if len(email)==0:
             flash('Error: Enter Valid Email')
-
         if len(password)==0:
-            flash('Error: Enter a Password')
-    
+            flash('Error: Enter a Password')   
         #Check if Email exits 
         user = User.FromEmail(email)
-
         #Check Password
         if not user or not user.CheckPassword(password):
             #wrong password
             logger.warning(f"Failed Login Attempt for: {email}")
             flash('Error: Login information did not match')
             return render_template('auth/login.html'), 401
+
 
         session.clear()
         session['user_id'] = user.user_id
@@ -111,12 +107,11 @@ def login():
 
         logger.info(f"User {user.user_id} logged in")
         # if valid, store user info in session to keep them logged in    
-        return redirect(url_for('home'))
-    
+        return redirect(url_for('home'))  
     return render_template('auth/login.html')
 
 @auth_bp.route('/logout', methods=['GET'])
-@login_required
+@require_auth
 def logout():
     user = User.FromID(session['user_id'])
     User.isInactive(user.user_id)
@@ -125,7 +120,7 @@ def logout():
     return redirect(url_for('home'))
 
 @auth_bp.route('/profile', methods=['GET'])
-@login_required
+@require_auth
 def profile():
     user = User.FromID(session['user_id'])
     #Show users profile information, username, email, role, and other relevant information. 
@@ -137,16 +132,86 @@ def password_reset():
 
     if request.method == 'POST':
         email = request.form.get('email').strip()
-        user = User.FromEmail(email)
-
+        user = User.FromEmail(email)  
         if user:
-            flash('password reset')
-            return redirect(url_for('auth.login'))
+            token = User.get_reset_token(user.user_id)
+            User.send_reset_email(user)
+        flash('If the email is valid a password reset has been sent')
+        return redirect(url_for('auth.login' ))
+
     return render_template('auth/password_reset.html')
 
 #password reset confirmation route
-@auth_bp.route('/password-reset/confirm', methods=['GET','POST'])
+@auth_bp.route('/password-reset/confirm/', methods=['GET','POST'])
 def password_reset_confirm():
-    #Stub for now to ensure that all routes are working properly.
-    #Get new password and token from form, validate token, if valid update password in DB. 
-    return render_template('auth/password_reset_confirm.html')
+
+    token = request.args.get('token')
+
+    if request.method == 'POST':
+        user =  User.verify_reset_token(token)
+        result = User.verify_reset_token(token)
+        user, token_id = result
+        if result is None:
+            flash('This is an invalid or expired token')
+            return redirect(url_for('auth.password_reset'))
+        
+        SpecialSymbol = ['!', '@', '#', '$', '?']
+ 
+        password = request.form.get('password').strip()
+        confirm = request.form.get('verifypassword').strip()
+
+        if not token or not password:
+            flash('Invalid Request')
+            return None
+
+        if password != confirm:
+            flash('Error: Passwords need to match')
+
+        #Check Password Complexity
+        if len(password) < 10:
+            hasError = True
+            flash('Error: Password must be at least 10 characters')
+        
+        if not any(char.isdigit() for char in password):
+            hasError = True
+            flash('Error: Password must have at least 1 number')
+        
+        if not any(char.isupper() for char in password):
+            hasError = True
+            flash('Error: Password must have at 1 uppercase letter') 
+
+        if not any(char.islower() for char in password):
+            hasError = True
+            flash('Error: Password must have at least 1 lowercase letter')    
+
+        if not any(char in SpecialSymbol for char in password):
+            hasError = True
+            flash('Error: Password must have at least 1 Special Character, !@#$?')
+
+        User.UpdatePassword(user.user_id, password)
+        User.UsedToken(token_id)
+        flash('Password Updated Successfully')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/password_reset_confirm.html', token = token)
+
+
+
+@auth_bp.route('/2fa/setup', methods=['GET', 'POST'])
+def mfa_setup():
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    secret = totp_manager.generate_secret()
+
+
+@auth_bp.route('/verify-2fa', methods=['GET', 'POST'])
+def verify_2fa():
+    if g.user not in session:
+        return redirect(url_for('auth.login'))
+    
+    if request.method == 'POST':
+        token = request.form['token']
+    
+        #Verify Token
+        totp = pyotp.TOTP()
+    

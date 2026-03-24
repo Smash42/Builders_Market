@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, jsonify, url_for
-from auth.auths import login_required
+from auth.auths import require_auth
 from auth.permissions import permission_required
 from models.categories import Category
 
@@ -8,7 +8,7 @@ category_bp = Blueprint('category', __name__, url_prefix='/category')
 
 # Add a new Category
 @category_bp.route('/add', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('category.add')
 def add_category():
 
@@ -28,7 +28,7 @@ def add_category():
 
 #Delete a Category
 @category_bp.route('/<int:category_id>/delete', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('category.delete')
 def delete_category(category_id):
     category = Category.FromDB(category_id)

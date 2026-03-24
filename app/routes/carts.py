@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from auth.auths import login_required
+from auth.auths import require_auth
 from auth.permissions import permission_required
 from models.product import ProductItem
 
@@ -8,7 +8,7 @@ carts_bp = Blueprint('cart', __name__, url_prefix='/cart')
 # add items to cart
 # expected input: { "product_id": 1, "quantity": 2, "user_id": 1 }
 @carts_bp.route('/', methods=['POST'])
-@login_required
+@require_auth
 @permission_required('order.add')
 def add_to_cart():
     product_id = request.form.get("product_id")
@@ -40,7 +40,7 @@ def add_to_cart():
 
 #Remove items from cart
 @carts_bp.route('/remove/<int:product_id>', methods=['POST'])
-@login_required
+@require_auth
 def remove_from_cart(product_id):
     cart = session.get('cart', {})
 
@@ -52,7 +52,7 @@ def remove_from_cart(product_id):
 
 # view cart items
 @carts_bp.route('/', methods=['GET'])
-@login_required
+@require_auth
 def view_cart():
     cart = session.get('cart', {})
     cart_items = []

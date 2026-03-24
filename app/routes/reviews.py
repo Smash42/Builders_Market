@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
-from auth.auths import login_required
+from auth.auths import require_auth
 from auth.permissions import permission_required
 from models.product import ProductItem
 from models.review import Review
@@ -10,7 +10,7 @@ reviews_bp = Blueprint('reviews', __name__, url_prefix='/')
 
 # Create a new review for a specific product
 @reviews_bp.route('/products/<int:product_id>/reviews/add', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('review.add')
 def add_review(product_id):
     product = ProductItem.GetByID(product_id)
@@ -38,7 +38,7 @@ def add_review(product_id):
 
 #Edit an existing review
 @reviews_bp.route('/products/<int:product_id>/reviews/<int:review_id>/edit', methods=['GET', 'POST'])
-@login_required
+@require_auth
 # everyone have review.edit.own?
 @permission_required('review.edit.own')
 def edit_review(product_id, review_id):
@@ -71,7 +71,7 @@ def edit_review(product_id, review_id):
 
 #delete a review
 @reviews_bp.route('/products/<int:product_id>/reviews/<int:review_id>/delete', methods=['GET', 'POST'])
-@login_required
+@require_auth
 #review delete own vs any review, if user  or moderator vs admin
 @permission_required('review.delete.own')
 def delete_review(product_id, review_id):
@@ -101,7 +101,7 @@ def view_reviews(product_id):
 
 # view all reviews for all products
 @reviews_bp.route('/reviews', methods=['GET'])
-@login_required
+@require_auth
 def view_all_reviews():
 
     # GET All Reviews from Database.....

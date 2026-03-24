@@ -1,8 +1,18 @@
 
+import base64
 from datetime import datetime
-
+from email.message import EmailMessage
+import io
+import secrets
+import hashlib
+from datetime import datetime, timedelta
+from flask import app, current_app, url_for
+import pyotp
+import qrcode
 from database.connection import get_connection
 from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 
 class User:
@@ -221,3 +231,161 @@ class User:
             db.commit()
         finally:
             db.close()
+
+    #Password Reset Function
+    @staticmethod
+    def get_reset_token(user_id):
+            db = get_connection()
+            try: 
+                token = secrets.token_urlsafe(32)
+                token_hash = hashlib.sha256(token.encode()).hexdigest()
+                expires_at = datetime.utcnow() + timedelta(minutes=3)
+                db.execute(""" 
+                        INSERT INTO password_reset_tokens (user_id, token_hash, expires_at) VALUES (?, ?, ?)
+                           """, (user_id, token_hash, expires_at))
+                db.commit()
+                return token
+            finally:
+                db.close()     
+
+    @staticmethod
+    def verify_reset_token(token):
+        if not token:
+            return None
+        db = get_connection()
+        try: 
+            token_hash = hashlib.sha256(token.encode()).hexdigest()
+            row = db.execute("""
+                             SELECT * FROM password_reset_tokens
+                             WHERE token_hash = ? AND used = 0
+                             """, (token_hash,)).fetchone()
+            
+            if not row:
+                return None
+            
+            if datetime.utcnow() > datetime.fromisoformat(row['expires_at']):
+                return None
+            
+            return User.FromID(row['user_id']), row['token_id']
+        finally: 
+            db.close()
+
+   #Mark token as used         
+    @staticmethod
+    def UsedToken(token_id):
+        db = get_connection()
+        try:
+            db.execute("""
+                       UPDATE password_reset_tokens
+                       SET used = 1
+                       WHERE token_id = ?
+                       """, (token_id,))
+            db.commit()
+        finally:
+            db.close()
+    
+    @staticmethod
+    def UpdatePassword(user_id, password):
+        db = get_connection()
+        try: 
+            password_hash = generate_password_hash(password)
+
+            db.execute("""
+                       UPDATE users 
+                       SET password_hash = ?, updated_at = ?
+                       WHERE user_id = ?
+                       """, (password_hash, datetime.utcnow(), user_id))
+            db.commit()
+        finally:
+            db.close()
+        
+
+    def send_reset_email(user):
+        app = current_app
+        token = user.get_reset_token(user.user_id)
+        reset_link = url_for('auth.password_reset_confirm', token = token, _external=True)
+        
+   
+        subject= 'Password Reset Request- Builders Market',
+        body=f"""To reset your password, visit the following link: 
+            {reset_link}
+            If you did not make this request, please ignore the email.""",
+        
+        #logging simulation
+        log_entry = f""" [{datetime.utcnow()}]
+
+        TO: {user.email}
+        SUBJECT: {subject}
+        RESET LINK: {reset_link}
+        """
+        with open("password_reset.log", "a") as f:
+            f.write(log_entry)
+
+        print("[SIMULATED EMAIL SENT, CHECK LOG for password_reset]")
+
+    # 2FA security
+    @staticmethod
+    def get_2fa_secret():
+        return pyotp.random_base32()
+    
+    @staticmethod
+    def get_qr_code(email, secret):
+        url = pyotp.totp.TOTP(secret).provisioning_uri(name = email, issuer_name="Builders Market")
+
+        img = qrcode.make(url)
+        buffer = io.BytesIO()
+        img.save(buffer, format = "PNG")
+
+        return base64.b64encode(buffer.getvalue()).decode()
+    
+    @staticmethod
+    def verify_2fa_code(secret, code):
+        totp = pyotp.TOTP(secret)
+        return totp.verify(code, valid_window = 1)
+    
+    @staticmethod
+    def enable_2fa(user_id, secret):
+        db = get_connection()
+        try: 
+            db.execute("""
+                       UPDATE users
+                       SET mfa_secret = ?, mfa_enabled = 1
+                       WHERE user_id = ?
+                       """, (secret, user_id))
+            db.commit()
+        finally:
+            db.close()
+
+    @staticmethod
+    def disabled_2fa(user_id):
+        db = get_connection()
+        try: 
+            db.execute("""
+                       UPDATE users
+                       SET mfa_secret = NULL, mfa_enabled = 0
+                       WHERE user_id = ?
+                       """, (user_id))
+            db.commit()
+        finally:
+            db.close()
+
+    @staticmethod
+    def get_backup_codes(user_id, count = 5):
+        db = get_connection()
+        code = []
+        try: 
+            for _ in range(count):
+                raw = secrets.token_hex(4)
+                hashed = hashlib.sha256(raw.encode()).hexdigest()
+
+                db.execute("""
+                           INSERT INTO user_backup_codes(user_id, code_hash)
+                           VALUES (?, ?)
+                           """, (user_id, hashed))
+                code.append(raw)
+
+            db.commit()
+            return code
+        finally:
+            db.close()
+                

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS password_reset_tokens;
 
 /* Ensure all users are unique with username and email, password will be hashed */
 CREATE TABLE users (
@@ -18,6 +19,8 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     is_active INTEGER DEFAULT 0,
+    mfa_secret TEXT NULL, 
+    mfa_enabled INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -116,6 +119,25 @@ CREATE TABLE reviews (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE password_reset_tokens (
+    token_id INTEGER PRIMARY KEY, 
+    user_id INTEGER NOT NULL, 
+    token_hash TEXT NOT NULL, 
+    expires_at DATETIME NOT NULL,
+    used INTEGER DEFAULT 0, 
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE user_backup_codes (
+    backup_id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL, 
+    code_hash TEXT NOT NULL, 
+    used INTEGER DEFAULT 0, 
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

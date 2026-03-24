@@ -1,7 +1,7 @@
 from datetime import date
 
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, session, url_for
-from auth.auths import login_required
+from auth.auths import require_auth
 from auth.permissions import permission_required
 from models.order import Order, OrderItem
 from models.product import ProductItem
@@ -10,7 +10,7 @@ orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
 #Create a new order
 @orders_bp.route('/create', methods=['POST'])
-@login_required
+@require_auth
 @permission_required('order.add')
 def create_order():
 
@@ -79,7 +79,7 @@ def create_order():
 
 # Update an existing order. OR do it within the Order Details
 @orders_bp.route('/<int:order_id>', methods=['POST'])
-@login_required
+@require_auth
 @permission_required('order.edit')
 def update_order(order_id):
 
@@ -107,7 +107,7 @@ def update_order(order_id):
 # Delete an order
 #own order vs any order
 @orders_bp.route('/<int:order_id>/delete', methods=['GET', 'POST'])
-@login_required
+@require_auth
 # users can delete their own orders, moderators or admins can delete any order
 @permission_required('order.delete.own')
 def delete_order(order_id):
@@ -130,7 +130,7 @@ def delete_order(order_id):
 
 # View orders own vs all orders
 @orders_bp.route('/', methods=['GET'])
-@login_required
+@require_auth
 #Users can only see orders they own, Moderator or Admin can see all orders
 def view_orders():
     if g.user.role in ["Admin", "Moderator"]:
@@ -138,13 +138,12 @@ def view_orders():
     else: 
         orders = Order.GetByUser(g.user.user_id)
 
-    
     return render_template("order/orders_all.html", orders=orders)
 
 
 #view a single order. if owned or moderator vs admin
 @orders_bp.route('/<int:order_id>', methods=['GET'])
-@login_required
+@require_auth
 #view own order detail or any order detail if moderator or admin
 def order_details(order_id):
     order = Order.GetByID(order_id)

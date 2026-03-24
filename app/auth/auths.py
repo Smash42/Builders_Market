@@ -5,11 +5,11 @@ from flask import abort, flash, g, jsonify, redirect, request, url_for
 
 
 #Decorator to check for Login (authentication)
-def login_required(f):
+def require_auth(f):
     @wraps(f)
     def wrapped_view(*args, **kwargs):
         if not g.get("user"): 
-           abort(401)
+          abort(401)
  
         return f(*args, **kwargs)
     return wrapped_view

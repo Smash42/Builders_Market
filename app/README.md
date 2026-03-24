@@ -6,11 +6,58 @@
     I want to create a smooth and seamless customer experience throughout the entire process from registering, 
     browsing products, and all the way through order delivery.
 
+# Setup, Start Server, View Site Instructions: 
+        **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
+        ** Should app be in the main folder then please disregard the above. 
+ * Setup:
+  python -m venv .venv
+  .venv\Scripts\activate (on Windows)
+  pip install -r requirements.txt
+  pip install pyotp qrcode
+* Prerequisites: Python 3.12.5, Flask, SQLite  
+* Install dependencies: pip install -r requirements.txt
+* How to configure database credentials: Database settings are stored in config/config.py
+* How to initialize the database schema: In new terminal: flask init-db **If not in app folder : flask --app app init-db
+*     
+## How to start the server and View the Site: 
+* In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
+* If you are using my already initialized database: 
+        admin user- admin1@test.com, Abcd1234!@
+        moderator user- blackpearl@test.com Abcd1234!@
+        regular user- john@test.com Abc123!
+* If you are deleting and initializing a new database. The first user will be given the role Admin. 
+
+# Login Credential if using my created database
+* Admin Role: admin1@test.com   Abcd1234!@
+* Moderator Role: blackpearl@test.com    Abcd1234!@
+* User Role: johnny@aol.com   Abcd1234!@  (Or anyone newly registered)
+* 
+* If you create a new DB, the FIRST user you register will be given the Admin Role. 
+__
+# How Passowrd Reset Implemented
+* Get-Content password_reset.log
+
+# How to Trgger Password Reset and Complete
+* Get-Content password_reset.log
+
+# Which 2FA Method is supported and how to enroll/verify
+
+# How 2FA State is stored and enforce in auth flow
+
+# Ho to test all password reset and 2FA flows
+
+
+
+
+__
 # Authentication Strategy 
 * I have used Secure sessions for users who are authenticated. The session clears once the user logs out. 
+* The session is created using the user_id, 
+* I have implemented app.config['PERMANENT_SESSION_KEY'] = timedelta(hours=24) to have a timeout for a session
 
 # Config required envirnment variables/secrets 
-* 
+* Sensitive values are stored secretly, i.e. password uses password hash to encrypt it
+* there is a SECRET_KEY to configure the app
 
 # Password Hashing
 * Password hashing is implemented during the user.Create(username, email, password) static method. 
@@ -20,8 +67,19 @@
 * Roles and permissions are modeled in their own ___.py file within Models
 * Permissions just uses GetAll() to see all permissions or FromDBRow(row) to see a specific permission.
 * Roles has many static methods such as Create, UpdatePermissions, FromDB, Delete, and GetAll(). This allows you to connect or update permissions to a specific role, See all available roles, Create a new Role, and Delete a role if needed. 
+* Tables users, roles, permissions, user_roles, and role_permissions decide which permission is assigned to a role, and which role is assigned to a user.
+* This allows for regulation on who can access what
+* @required_auth, @permission_required, and @user_role_required to implement the security functions. resulting in 401 or 403 errors as necessary
 
 # Auth endpoints and Protected Routes
+* The only routes that are 'not protected' and can be accessed via someone unauthenticated would be /home, /products, 
+/products/1 (any product detail), /auth/login to start an authenticated session, /auth/register to register an account, 
+/auth/password-reset
+* Protected routes (All others) a few examples, anything under /orders, /admin, /cart, reviews, 
+** /orders - order.add permission
+** /admin/users - Admin role
+** /orders - required_auth
+** /admin/users/1/role - user.changerole
 
 # Test Auth and permission Behavior
 * All routes except the 3 that the Guests can openly view have login_required, further for other routes that also have permission limitations @permission_required('permission_name') is implemented alongside the login_required. Some admin only pages require @login_required and @user_role_required('Admin') 
@@ -36,26 +94,9 @@
 
 # Current Limitations and will be implemented in future sprints
 * Password Reset is not working yet, the page will work but nothing further at this time. 
+* No MFA 
+_______
 
-# Setup, Start Server, View Site Instructions: 
-        **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
-        ** Should app be in the main folder then please disregard the above. 
- * Setup:
-  python -m venv .venv
-  .venv\Scripts\activate (on Windows)
-  pip install -r requirements.txt
-* Prerequisites: Python 3.12.5, Flask, SQLite  
-* Install dependencies: pip install -r requirements.txt
-* How to configure database credentials: Database settings are stored in config/config.py
-* How to initialize the database schema: In new terminal: flask init-db **If not in app folder : flask --app app init-db
-*     
-## How to start the server and View the Site: 
-* In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
-* If you are using my already initialized database: 
-        admin user- admin1@test.com, Abcd1234!@
-        moderator user- blackpearl@test.com Abcd1234!@
-        regular user- john@test.com Abc123!
-* If you are deleting and initializing a new database. The first user will be given the role Admin. 
 
 # Template/Pages implemented:
 ## Home Page/Dashboard:

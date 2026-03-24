@@ -2,7 +2,7 @@ import os
 
 from flask import Blueprint, abort, current_app, flash, g, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
-from auth.auths import login_required
+from auth.auths import require_auth
 from auth.permissions import permission_required
 from database.connection import get_connection
 from models.categories import Category
@@ -42,7 +42,7 @@ def product_details(product_id):
 
 # Add new product ...
 @products_bp.route('/add', methods=['GET', 'POST'])
-@login_required #authentication
+@require_auth #authentication
 @permission_required('product.add') #permission
 def add_product():
     if request.method == 'GET':
@@ -103,7 +103,7 @@ def add_product():
 
 # Edit an existing product
 @products_bp.route('/<int:product_id>/edit', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('product.edit')
 def edit_product(product_id):
     info = ProductItem.FromDB(product_id)
@@ -172,7 +172,7 @@ def edit_product(product_id):
 
 # Delete a product 
 @products_bp.route('/<int:product_id>/delete', methods=['GET','POST'])
-@login_required 
+@require_auth 
 @permission_required('product.delete')
 def delete_product(product_id):
     # DELETE product from DB

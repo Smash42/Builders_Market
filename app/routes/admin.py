@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for
-from auth.auths import login_required, user_role_required
+from auth.auths import require_auth, user_role_required
 from auth.permissions import permission_required
 from database import connection
 from models.permissions import Permission
@@ -10,7 +10,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 #View All Users
 @admin_bp.route('/users', methods=['GET'])
-@login_required
+@require_auth
 @user_role_required('Admin')
 def view_users():
     users = User.GetAll()
@@ -19,7 +19,7 @@ def view_users():
 
 #User Detail
 @admin_bp.route('/users/<int:user_id>', methods=['GET'])
-@login_required 
+@require_auth 
 @user_role_required('Admin')
 def user_detail(user_id):
     user = User.FromID(user_id)
@@ -32,7 +32,7 @@ def user_detail(user_id):
 
 #Assign/update User Roles
 @admin_bp.route('/users/<int:user_id>/role', methods=['POST'])
-@login_required
+@require_auth
 @permission_required('user.changerole')
 def update_user_role(user_id):
     user = User.FromID(user_id)
@@ -56,7 +56,7 @@ def update_user_role(user_id):
 
 #Edit User WITHIN PROFILE?
 @admin_bp.route('/users/<int:user_id>/edit', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('user.edit')
 def edit_user(user_id):
     user = User.FromID(user_id)
@@ -91,7 +91,7 @@ def edit_user(user_id):
    
 #Delete User
 @admin_bp.route('/users/<int:user_id>/delete', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('user.delete')
 def delete_user(user_id):
     user = User.FromID(user_id)
@@ -109,7 +109,7 @@ def delete_user(user_id):
 
 # View Roles
 @admin_bp.route('/roles', methods=['GET'])
-@login_required
+@require_auth
 @permission_required('role.read')
 def view_roles():
     # Add Role Model
@@ -119,7 +119,7 @@ def view_roles():
 
 #Create a new role
 @admin_bp.route('/roles/add', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('role.add')
 def create_role():
     if request.method == 'POST':
@@ -140,7 +140,7 @@ def create_role():
 
 #Edit Role
 @admin_bp.route('/roles/<int:role_id>', methods=['GET','POST'])
-@login_required
+@require_auth
 @permission_required('role.edit')
 def update_role_permissions(role_id):
     role = Role.FromDB(role_id)
@@ -160,7 +160,7 @@ def update_role_permissions(role_id):
 
 #Delete Role
 @admin_bp.route('/roles/<int:role_id>/delete', methods=['GET', 'POST'])
-@login_required
+@require_auth
 @permission_required('role.delete')
 def delete_role(role_id):
     role = Role.FromDB(role_id)
@@ -173,7 +173,7 @@ def delete_role(role_id):
 
 # List all Permissions, read
 @admin_bp.route('/permissions', methods=['GET'])
-@login_required
+@require_auth
 @user_role_required('Admin')
 def view_permissions():
     permissions = Permission.GetAll()
