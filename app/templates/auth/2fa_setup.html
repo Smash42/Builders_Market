@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+{% block title %} MFA Setup {% endblock %}
+
+
+{% block content %}
+
+<h1> Set up Multi-factor Authentication </h1>
+
+{% if qr_code %}
+<div>
+    <p> Scan the QR code to gain access using an authentication app</p>
+
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+    <p> Or Manually enter the code: {{secret}}</p>
+</div>
+<br>
+<div class="auth-grid">
+    <div class="auth-card">
+        <h3> Verify Setup </h3>
+        <p> Please enter the code provided to you </p>
+
+        <form action="{{url_for('auth.setup_2fa')}}" method="post">
+
+            <label for="token"> Enter Code: </label>
+            <input type="text" id="token" name="token" required>
+            <br><br>
+            <div class="auth-card-button">
+            <button type="submit" class="greenButton"> Verify and Enable MFA </button>
+            </div>
+                <br>
+        </form>
+    </div>
+
+</div>
+
+{% else %}
+<p> Click "Setup MFA" to generate a code</p>
+<form method="post">
+    <button type="submit" class=" greenButton "> Setup MFA </button>
+</form>
+{% endif %}
+{% endblock %}

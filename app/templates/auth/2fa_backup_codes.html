@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block title %} Backup Codes {% endblock %}
+
+
+{% block content %}
+
+<h1> Backup Codes </h1>
+<br>
+<div class="auth-grid">
+    <h4> Save these codes for later use if 2FA is unavailable </h4>
+    <div class="auth-card">
+        
+            {% for code in codes %}
+             - {{code}} <br>
+            {% endfor %}
+                <br>
+            <button class="greenButton"> <a href="{{ url_for('home') }}" > Continue </a></button>
+    </div>
+
+</div>
+{% endblock %}

@@ -35,21 +35,56 @@
 * If you create a new DB, the FIRST user you register will be given the Admin Role. 
 __
 # How Passowrd Reset Implemented
-* Get-Content password_reset.log
+* Password reset asks the user for their Email, which is then verified to be connected to a user
+* Once it is verified I have a reset_token method that uses secrets and hashlib to create a secret token which will allow for the password to be changed
+* The tokens hashed version, for security purposes, will be stored in the password_reset_token database. It includes whether or not it has been used and has a time expiration. 
+* Whether or not the email is accurate, it will proceed the same. 
+* 
+* For testing purposes in powershell of the app please go to: 
+Get-Content password_reset.log   This will bring you to the email (simulation)
+* 
+* Once the link is clicked the password reset confirm is initiated. 
+* It will make sure the token that is being used to reset the password, is accurate and was not used before (still shows a 0). Should the used row have a 1. Then the token has been used and is no longer valid. 
+* It will also make sure that the token is still active by checking the current datetime against the expiration time. Should it have expired then the token is no longer valid. 
+* After the token is used, the table is updated to reflect a '1' in the used row for that token_id. 
+* The password is then updated in the users table where the user_id matches.
+
 
 # How to Trgger Password Reset and Complete
-* Get-Content password_reset.log
+* You trigger a password reset by selecting the forgot password button that appears during login
+* On the next screen you will input the email associated with your account
+* Normally an email would be sent to your email (if valid) where a link is provided for you to click on
+* For testing purposes in powershell of the app please go to: 
+Get-Content password_reset.log   This will bring you to the email (simulation) where you can select the link provided
+* It will now bring you to the password-reset confirm page, where if the token is still valid, meaning not used or expired, you will be able to update your password, making sure it meets the same criteria as when you register an account. 
 
 # Which 2FA Method is supported and how to enroll/verify
+* I have implemented 2FA that can be utilized via an authentication app (Microsoft Authenticator, DUO, Google Authenticator, etc. )
+* Once you select Enable 2FA from your profile (or dashboard), you will scan the QR code, 
+* You will then provide a code from the app in the appropiate input box to verify that you have completed set up
+* Once verified it will then bring you to the backup codes page where you should make note of any backup codes in case 2FA might not be available
+* Moving forward whenever you sign in you will automatically be brought to the 2FA verification page and will need to input a code from your app OR one of the backup codes provided. 
 
 # How 2FA State is stored and enforce in auth flow
+* If you have enabled 2 factor authentication, once you have input a correct email/password combo you will be brought to the verify 2fa page. 
+* You will NOT be able to bypass this, and MUST verify authentication with an appropiate code. 
+* In the users table there are 2 columns that correspond with 2fa. mfa_enabled (0 if NOT, 1 if ENABLED) and mfa_secret which holds a secret for the session. 
+* If mfa is enabled, that secret and token will then be used to verify the code that is input by the user. TOTP is used with the secret.
 
-# Ho to test all password reset and 2FA flows
+# How to test all password reset and 2FA flows
+* Password Reset: If you have registered a user successfully (and have confirmed by logging in) When you go to log in next, select Forgot Password
+* Input the email associated with the account and submit
+* For testing purposes in powershell of the app please go to: 
+Get-Content password_reset.log   Select the link that is provided. 
+* If the email was not valid (connected to an account) no email will be sent. 
+* You will then be able to input a new password and confirm. If they match and meet security requirements your password will be updated. 
+* You will then be prompted to login using your new password
+_______
+* 2FA Flows:
 
 
 
-
-__
+______
 # Authentication Strategy 
 * I have used Secure sessions for users who are authenticated. The session clears once the user logs out. 
 * The session is created using the user_id, 

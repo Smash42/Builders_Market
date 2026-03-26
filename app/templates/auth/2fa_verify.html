@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+{% block title %} MFA Verification{% endblock %}
+
+
+{% block content %}
+
+<h1> Multi-factor Authentication </h1>
+<br>
+<div class="auth-grid">
+    <div class="auth-card">
+        <p> Please enter the code provided to you </p>
+        <form action="{{url_for('auth.verify_2fa')}}" method="post">
+
+            <label for="token"> Authentication Code: </label>
+            <input type="text" id="token" name="token" required>
+            <br><br>
+            <div class="auth-card-button">
+            <button type="submit" class="greenButton"> Verify </button>
+
+            </div>
+                <br>
+        </form>
+        <p> You can use a backup code instead if needed. </p>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from flask import Flask, redirect, render_template, session, g, url_for
+from flask import Flask, redirect, render_template, request, session, g, url_for
 
 from models.users import User
 from routes.products import products_bp
@@ -39,6 +39,22 @@ def create_app():
         else:
             g.user = None
             g.user_permissions = []
+            
+    @app.before_request
+    def require_2fa_for_protected_routes():
+        if not request.endpoint:
+            return
+        
+        # Skip auth endpoints
+        if request.endpoint.startswith('auth.') or request.endpoint == 'static':
+            return
+        
+        user = getattr(g, 'user', None)
+        if not user:
+            return
+        
+        if user and user.mfa_enabled and not session.get('2fa_verified'):
+            return redirect(url_for('auth.verify_2fa'))
 
     @app.route('/')
     def home():

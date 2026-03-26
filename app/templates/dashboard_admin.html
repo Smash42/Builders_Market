@@ -6,6 +6,13 @@
 
 <h1>Welcome Back, Administrator: {{ g.user.username }}!</h1>
 
+    {% if g.user and not g.user.mfa_enabled %}
+    <div class="banner-warning center1">
+        <p> Setup Two-Factor Authentication to access protected content. 
+        <button class="greenButton"><a href="{{url_for('auth.setup_2fa')}}"> Enable 2FA</a> </button>  </p>
+    </div>
+    {% endif %}
+
 <div class="dashboard-grid">
     <button class="greenButton">
         <a href="{{ url_for('products.get_products') }}" > Products </a>
@@ -35,8 +42,6 @@
     <button class="pinkButton">
         <a href="{{ url_for('admin.view_permissions') }}" > Permissions </a>
     </button>
-
-
 
     <button class="tealButton">
         <a href="{{ url_for('auth.profile') }}" > My Profile </a>

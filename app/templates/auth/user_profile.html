@@ -3,11 +3,33 @@
 
 {% block content %}
 <h1> My Profile: {{user.username}}</h1>
+<div class="left">
+    <h4>Username: {{user.username}} </h4>
 
-<h4>Username: {{user.username}} </h4>
+    <p>Email: {{user.email}} <br> Role: {{user.role}} </p>
+</div>
 
-<p>Email: {{user.email}} <br> Role: {{user.role}} </p>
 
+<div class="right">
+    <h3> Security Settings </h3>
+    {% if user.mfa_enabled %}
+        <p> 2 Factor Verification is currently ENABLED </p>
+        <button class="orangeButton">
+            <a href="{{url_for('auth.regen_backup_codes')}}" > Generate Backup Codes </a>
+        </button>
+
+        <button class="redButton">
+            <a href="{{url_for('auth.disable_2fa')}}" > Disable 2FA</a>
+        </button>
+
+    {% else %}
+        <p> 2 Factor Verification is NOT Enabled</p>
+        <button class="greenButton">
+            <a href="{{url_for('auth.setup_2fa')}}" > Enable 2FA</a>
+        </button>
+    {% endif %}
+
+</div>
 
 
 {% endblock %}

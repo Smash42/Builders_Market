@@ -1,6 +1,6 @@
 
 from functools import wraps
-from flask import abort, flash, g, jsonify, redirect, request, url_for
+from flask import abort, flash, g, jsonify, redirect, request, session, url_for
 
 
 
@@ -10,6 +10,12 @@ def require_auth(f):
     def wrapped_view(*args, **kwargs):
         if not g.get("user"): 
           abort(401)
+          
+        user = g.user
+        if getattr(user, "is_2fa_enabled", False) and not session.get("2fa_verified", False):
+        #session.get('2fa_required') and not session.get('2fa_verified'):
+            flash('This Route is 2FA protected. Please enable 2FA to view it')
+            abort(403)
  
         return f(*args, **kwargs)
     return wrapped_view

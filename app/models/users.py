@@ -16,13 +16,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User:
-    def __init__(self, user_id, username, email, password_hash, role = None, permissions = None):
+    def __init__(self, user_id, username, email, password_hash, role = None, permissions = None, mfa_enabled= False, mfa_secret=None):
         self.user_id = user_id
         self.username = username
         self.email = email
         self.password_hash = password_hash
         self.role = role
         self.permissions = permissions or []
+        self.mfa_enabled = mfa_enabled
+        self.mfa_secret = mfa_secret
 
     
     def CheckPassword(self, password):
@@ -51,7 +53,9 @@ class User:
                 email=row['email'],
                 password_hash=row['password_hash'],
                 role=role,
-                permissions=permission_list
+                permissions=permission_list, 
+                mfa_enabled=bool(row['mfa_enabled']),
+                mfa_secret=row['mfa_secret']
             )
 
 # Check Email
@@ -122,7 +126,7 @@ class User:
             UPDATE users
             SET username = ?, email = ?, updated_at = ?
             WHERE user_id = ?
-        """, (name, email, user_id, datetime.utcnow()))
+        """, (name, email, datetime.utcnow(), user_id))
             db.commit()
             return User.FromID(user_id)
     
@@ -156,7 +160,6 @@ class User:
             db.commit()
         finally:
             db.close()
-
 
 
     #Get all Users
@@ -275,12 +278,13 @@ class User:
     def UsedToken(token_id):
         db = get_connection()
         try:
-            db.execute("""
+            result = db.execute("""
                        UPDATE password_reset_tokens
                        SET used = 1
-                       WHERE token_id = ?
+                       WHERE token_id = ? AND used = 0
                        """, (token_id,))
             db.commit()
+            return result.rowcount ==1
         finally:
             db.close()
     
@@ -300,9 +304,8 @@ class User:
             db.close()
         
 
-    def send_reset_email(user):
+    def send_reset_email(user, token):
         app = current_app
-        token = user.get_reset_token(user.user_id)
         reset_link = url_for('auth.password_reset_confirm', token = token, _external=True)
         
    
@@ -357,14 +360,14 @@ class User:
             db.close()
 
     @staticmethod
-    def disabled_2fa(user_id):
+    def disable_2fa(user_id):
         db = get_connection()
         try: 
             db.execute("""
                        UPDATE users
                        SET mfa_secret = NULL, mfa_enabled = 0
                        WHERE user_id = ?
-                       """, (user_id))
+                       """, (user_id,))
             db.commit()
         finally:
             db.close()
@@ -388,4 +391,26 @@ class User:
             return code
         finally:
             db.close()
-                
+
+    @staticmethod
+    def verify_backup_codes(user_id, code):
+        db = get_connection()
+        try:
+            hash = hashlib.sha256(code.encode()).hexdigest()
+
+            row = db.execute("""
+                             SELECT * FROM user_backup_codes
+                             WHERE user_id = ? AND code_hash = ? AND used = 0
+                             """, (user_id, hash)).fetchone()
+            if not row:
+                return False
+            db.execute("""
+                       UPDATE user_backup_codes
+                       SET used = 1
+                       WHERE backup_id = ?
+                       """, (row['backup_id'],))
+            db.commit()
+
+            return True
+        finally:
+            db.close()
