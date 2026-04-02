@@ -80,7 +80,13 @@ Get-Content password_reset.log   Select the link that is provided.
 * You will then be able to input a new password and confirm. If they match and meet security requirements your password will be updated. 
 * You will then be prompted to login using your new password
 _______
-* 2FA Flows:
+* 2FA Flows: Register a new user, login with their information. 2FA is not enabled automatically
+* Enable 2FA in the user's profile area
+* Once enabled, sign out and then attempt to sign back in
+* If you look at the database you will be able to see if a user has 2FA enabled or not. 
+* IF ENABLED, once you input your email and password, you will automatically be brought to the 2FA confirmation screen
+* Input a code from your authenticator app or one of the backup codes
+* Sign in will be successful if you have input a correct code.
 
 
 

@@ -8,14 +8,14 @@
 <h1> Set up Multi-factor Authentication </h1>
 
 {% if qr_code %}
-<div>
+<div class="left">
     <p> Scan the QR code to gain access using an authentication app</p>
 
-    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+    <img class="qr-code" src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
     <p> Or Manually enter the code: {{secret}}</p>
 </div>
 <br>
-<div class="auth-grid">
+<div class="right auth-grid">
     <div class="auth-card">
         <h3> Verify Setup </h3>
         <p> Please enter the code provided to you </p>

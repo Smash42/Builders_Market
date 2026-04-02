@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% block title %} Disable 2FA {% endblock %}
+
+
+{% block content %}
+
+<h1> Disable 2FA </h1>
+<div class="auth-grid">
+    <div class="auth-card">
+        <h3> Are you sure you want to DISABLE 2FA?</h3>
+
+             <form method="POST" action="{{ url_for('auth.disable_2fa') }}">
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                    <br><br>
+
+                    <label for="token">2FA Code:</label>
+                    <input type="text" id="token" name="token">
+                <button class="redButton" type="submit">  Disable </button>
+            </form>
+    </div>
+
+</div>
+{% endblock %}

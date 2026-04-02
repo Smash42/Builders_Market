@@ -277,31 +277,34 @@ def verify_2fa():
     
 
     
-@auth_bp.route('/2fa/disable', methods=['POST'])
+@auth_bp.route('/2fa/disable', methods=['GET', 'POST'])
+@require_auth
 def disable_2fa():
     user = g.user
     if not user:
         return redirect(url_for('auth.login'))
     
+    if request.method == 'POST':
 
-    password = request.form.get('password')
-    token = request.form.get('token')
+        password = request.form.get('password')
+        token = request.form.get('token')
 
-    if not user.CheckPassword(password):
+        if not user.CheckPassword(password):
             flash('Invalid login credentials')
             return redirect(url_for('auth.profile'))
             
         
-    if user.mfa_enabled:
-        if not User.verify_2fa_code(user.mfa_secret, token):
-            flash('Invalid MFA Code')
-            return redirect(url_for('auth.profile'))
+        if user.mfa_enabled:
+            if not User.verify_2fa_code(user.mfa_secret, token):
+                flash('Invalid MFA Code')
+                return redirect(url_for('auth.profile'))
 
-    User.disable_2fa(user.user_id)
+        User.disable_2fa(user.user_id)
 
-    session.pop('2fa_verified', None)
-    flash('2FA Disabled Successfully')
-    return redirect(url_for('auth.profile'))
+        session.pop('2fa_verified', None)
+        flash('2FA Disabled Successfully')
+        return redirect(url_for('auth.profile'))
+    return render_template('auth/2fa_disable.html')
 
 @auth_bp.route('/2fa/backup-code/regenerate', methods=['GET', 'POST'])
 def regen_backup_codes():

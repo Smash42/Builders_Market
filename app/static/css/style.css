@@ -64,6 +64,13 @@ h1 {
 a {
     color: white;
 }
+/* MFA 8 */
+    .qr-code {
+        display: block;
+        margin: auto;
+        width: 15em;
+        height: 15em;
+    }
 
 /* columns */
 .left {

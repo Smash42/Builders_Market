@@ -160,7 +160,14 @@
     .delete-card form {
         text-align: center;
     }
-
+    
+    /*MFA */
+    .qr-code {
+        display: block;
+        margin: auto;
+        width: 80%;
+        height: 80%;
+    }
     /* footer */
 
     footer {
