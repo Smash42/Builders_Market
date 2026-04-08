@@ -74,7 +74,7 @@ a {
 
 /* columns */
 .left {
-    width: 40%;
+    width: 45%;
     display: block;
     float: left;
     text-align: center;
@@ -82,7 +82,7 @@ a {
 
 }
 .right {
-    width: 40%;
+    width: 45%;
     display: block;
     float: right;
     text-align: center;
@@ -92,6 +92,22 @@ a {
     width: 60%;
     list-style-position: inside ;
     text-align: left;
+}
+
+.rightButton {
+    display: block;
+    float: right;
+    width: 20%;
+    margin-right: 10%;
+}
+
+
+.leftButton {
+    width: 20%;
+    display: block;
+    float: left;
+    margin-left: 10%;
+
 }
 
 /* Buttons */
@@ -107,6 +123,7 @@ button:hover{
     border-color: rgb(209, 255, 207);
     border-style: groove;
 }
+
 
 .center1 {
     text-align: center;
@@ -242,7 +259,7 @@ button:hover{
 }
 
 .prod-buttons  {
-    display:flex ;
+    display:flex;
     width: 100%;
     justify-content: space-between;
 

@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS password_reset_tokens;
+DROP TABLE IF EXISTS user_backup_codes;
 
 /* Ensure all users are unique with username and email, password will be hashed */
 CREATE TABLE users (

@@ -2,9 +2,9 @@
 # Author: Ashley Tierney
 
 # Project Overview: 
-    A place to view company products, inventory and create or track orders. 
-    I want to create a smooth and seamless customer experience throughout the entire process from registering, 
-    browsing products, and all the way through order delivery.
+    Builder's Market is an online marketplace to manage and view company products, inventory and create or track orders. 
+    This was developed to create a smooth and seamless customer experience throughout the entire process from registering as a user, browsing products, and all the way through order delivery.
+    Users can place order, and leave reviews, while Moderator and Admin control what goes on the site, update products, orders, and keep track of users and inventory. 
 
 # Setup, Start Server, View Site Instructions: 
         **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
@@ -132,10 +132,6 @@ ______
 * Guests can only access Home, Product Browse, Product Details. All other routes will throw a 401 error, UnAuthenticated. 
 * Moderator and User it depeneds on their permissions. But if they do not have the permissions you will get a 403 error, Insufficient Permissions. 
 
-
-# Current Limitations and will be implemented in future sprints
-* Password Reset is not working yet, the page will work but nothing further at this time. 
-* No MFA 
 _______
 
 

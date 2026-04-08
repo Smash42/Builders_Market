@@ -13,16 +13,13 @@
     }
 
     /*columns */
-    .left {
-        width: 80%;
+    .left, .right {
+        width: 90%;
         display: block;
-
+        float: inline-start;
+        margin: 2%;
     }
 
-    .right {
-        width: 80%;
-        display: block;
-    }
 
     /*main */
 
@@ -160,6 +157,28 @@
     .delete-card form {
         text-align: center;
     }
+
+    /* Order/Cart Tables */
+
+    .order-table-container {
+        display: flex;
+        justify-content: center;
+    }
+    .order-table {
+        border: 2px black solid;
+    }
+    .order-table th {
+        font-size: 1.2em;
+    }
+    .order-table th,  .order-table td {
+        font-size: 1em;
+        padding: 1px;
+        border-bottom: 2px solid black;
+        border-right: 1px black solid;
+        text-align: center;
+    }
+
+
     
     /*MFA */
     .qr-code {

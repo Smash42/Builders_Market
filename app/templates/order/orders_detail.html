@@ -29,7 +29,7 @@
         <th> Order Item ID</th>
         <th> Product</th>
         <th> Product ID </th>
-        <th> Quantity</th>
+        <th> Qty.</th>
         <th> Purchase Price </th>
         <th>  Item Total </th>
 
@@ -55,7 +55,7 @@
      {% if 'order.delete.all' in g.user.permissions %}
     <button class="redButton delete-grid">
         <a  href="{{ url_for ('orders.delete_order', order_id= order.order_id)}}"> <!-- product_id = product.id  --> 
-            Delete</a>
+            Delete Order</a>
     </button>
     {% endif %}
     {% endif %}

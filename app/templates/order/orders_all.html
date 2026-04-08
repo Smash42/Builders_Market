@@ -16,13 +16,13 @@
 
     <div class="prod-buttons">
         <button class="blueButton" type="submit">
-            <a href="{{url_for('orders.order_details', order_id=order.order_id)}}"> Details </a>
+            <a href="{{url_for('orders.order_details', order_id=order.order_id)}}">  Details </a>
         </button>
 
     {% if 'order.edit' in g.user.permissions %}
     <button class="orangeButton">
         <a href="{{ url_for ('orders.update_order', order_id = order.order_id)}}"> <!-- product_id = product.id  --> 
-            Update </a>
+            Update Order </a>
     </button>
 
     {% endif %}
@@ -31,7 +31,7 @@
      {% if 'order.delete.all' in g.user.permissions %}
     <button class="redButton">
         <a  href="{{ url_for ('orders.delete_order', order_id= order.order_id)}}"> <!-- product_id = product.id  --> 
-            Delete</a>
+            Delete Order</a>
     </button>
     {% endif %}
     {% endif %}
