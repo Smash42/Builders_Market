@@ -195,4 +195,4 @@ You will not be able to purchase more than the quantity that is in stock
 4)	How do I check my order status?
 You can go to My Orders > select Details for the order you want to see. The status will be displayed in the top area, and the date it was last updated.
 5)	How do I disable 2fa?
-Go to "My Profile", select the "Disable 2FA" button. Input your password and a code from your authenticater app, or a backup code. If your code is valid it will disable 2FA. * NOTE: disabling 2FA comes with security risks. 
+Go to "My Profile", select the "Disable 2FA" button. Input your password and a code from your authenticater app, or a backup code. If your code is valid it will disable 2FA. * NOTE: Disabling 2FA comes with security risks. 
