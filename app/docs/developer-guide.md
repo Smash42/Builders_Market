@@ -42,6 +42,7 @@
 * 	inside .venv: pip install Flask
 ####	Mac/Linux:
 * 	python3 -m venv .venv
+* 
 -	Install dependencies: pip install -r requirements.txt
 
 ## Environmental Variable:
