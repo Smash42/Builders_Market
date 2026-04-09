@@ -1,9 +1,13 @@
 # API Reference Guide
-## Authentication Routes
+
+# Table of Content
+1. [Authentication Routes](#auth-route)
+
+## Authentication Routes <a name="auth-route"></a>
 1)	User Registration- POST
-•	/api/auth/register
-•	Description: Creates a new user and stores the hashed password 
-•	Authentication: No
+* /api/auth/register
+* Description: Creates a new user and stores the hashed password 
+* 	Authentication: No
 •	Required Permission:  Anyone can register, public route
 •	Request: Body: {“username”: “John Smith”, “email”: “testing123@test.com”, “password”:”plainTextPassword”} 
 •	Response: Returns JSON success or error message. 
