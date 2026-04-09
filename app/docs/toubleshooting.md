@@ -1,4 +1,13 @@
 # Troubleshooting & Support
+
+# Table of Contents 
+1. [Troubleshooting](#troubleshooting)
+2. [User Account Problems](#user-account)
+3. [Admin, Operational Issues](#admin)
+4. [Support Request](#support)
+5. [End User Support Strategy](support-strategy)
+
+# Troubleshooting
 ##  Invalid Login Credentials
 	Cause: 
 	-	Incorrect Email or Password
@@ -73,7 +82,7 @@ Resolution:
 2.	Try again later
 3.	If issues persist, report it to Admin with a screenshot of the issue
  
-# User Account Problems
+# User Account Problems <a name="user-account></a>
 ## Account Locked
 Resolution:
 1.	Wait 10-15 mins for the lockout period to expire
@@ -94,7 +103,7 @@ Resolution:
 3.	Re-enable 2FA on the new device/app
 4.	If you lost your backup codes and are logged out, contact Admin
  
-# Admin/Operational Issues
+# Admin/Operational Issues <a name="admin"></a>
 ## Database Connection Error
 -	App crashes
 -	500 errors
@@ -127,7 +136,7 @@ Resolution:
 3.	Ensure the permissions are assigned correctly
 4.	Verify decorator @permission_required(‘permission.name’) 
  
-# Support Request
+# Support Request <a name="support></a>
 To request support please email: support@buildersmarket.com with the following information.
 1.	Your username and/or registered email
 2.	A description of the problem and what you have done to try to fix it. 
@@ -135,7 +144,7 @@ To request support please email: support@buildersmarket.com with the following i
 4.	If you received an error message please not the exact message and description given
 5.	Browser and operating system you were using. 
 
-# End User Support Strategy
+# End User Support Strategy <a name="support-strategy"></a>
 ## Self-Service (Primary Support)
 -	Detailed Error messages
 -	Troubleshooting guide
