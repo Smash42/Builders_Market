@@ -39,8 +39,8 @@
 - In terminal: python app.py , Once the server starts select the URL given to begin viewing the app
 
 # Document Links
-* User Guide: docs/user-guide.md
-* Developer Guide: docs/
+* User Guide: docs/user-guide.pdf 
+* Developer Guide: docs/developer-guide.md
 * API Reference:  docs/api-reference.md
 * Troubleshooting: docs/troubleshooting.md
 
@@ -60,14 +60,9 @@ ________
 * If you are using my already initialized database: 
         admin user- admin1@test.com, Abcd1234!@
         moderator user- blackpearl@test.com Abcd1234!@
-        regular user- john@test.com Abc123!
 * If you are deleting and initializing a new database. The first user will be given the role Admin. 
 
 # Login Credential if using my created database
-* Admin Role: admin1@test.com   Abcd1234!@
-* Moderator Role: blackpearl@test.com    Abcd1234!@
-* User Role: johnny@aol.com   Abcd1234!@  (Or anyone newly registered)
-* 
 * If you create a new DB, the FIRST user you register will be given the Admin Role. 
 __
 # How Passowrd Reset Implemented
@@ -230,9 +225,6 @@ _______
 
 # Browser Compatability Notes: 
 * All browsers are able to be used for viewing of Builder's Market. I have not ran into any issues or limitations
-
-
-
 
 
 # Project Structure: Folder organization
