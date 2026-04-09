@@ -1,13 +1,16 @@
 # User Guide
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Getting Started](#Getting Started)
+2. [Getting Started](#get-started)
 3. [Feature Walkthroughs](#feat-walkthrough)
+4. [Account Management](#account-mgt)
+5. [Troubleshooting](#Troubleshooting)
+6. [FAQ](#faq)
 
 # Introduction
 Builder's Market is an online marketplace to manage and view company products, inventory, and create or track orders. This was developed to create a smooth and seamless customer experience throughout the entire process, from registering as a user, browsing products, and all the way through order delivery. Users can place orders and leave reviews, while Moderators and Admins control what goes on the site, update products, orders, and keep track of users and inventory. 
 
-# Getting Started
+# Getting Started <a name="get-started"></a>
 ## Account Creation
 -	Navigate to the home screen and select the “Register” button
 -	Enter a unique username, email, and password. Select Submit
@@ -135,7 +138,7 @@ Admin
 -	Admin can assign roles to a user utilizing the drop down menu in the user details page
  
  
-# Account Management
+# Account Management <a name="account-mgt"></a>
 ## Enable 2FA
 -	If 2FA is NOT enabled, you can select the “Enable 2FA” button on your dashboard or in your profile.
  
@@ -191,4 +194,5 @@ Click on Forgot Password during the login process and follow the instructions in
 You will not be able to purchase more than the quantity that is in stock
 4)	How do I check my order status?
 You can go to My Orders > select Details for the order you want to see. The status will be displayed in the top area, and the date it was last updated.
-5)	…
+5)	How do I disable 2fa?
+Go to "My Profile", select the "Disable 2FA" button. Input your password and a code from your authenticater app, or a backup code. If your code is valid it will disable 2FA. * NOTE: disabling 2FA comes with security risks. 
