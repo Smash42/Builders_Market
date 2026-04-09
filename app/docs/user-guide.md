@@ -1,7 +1,7 @@
 # User Guide
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Getting Started](#Getting Started)
+2. [Getting-Started](#Getting Started)
 
 # Introduction
 Builder's Market is an online marketplace to manage and view company products, inventory, and create or track orders. This was developed to create a smooth and seamless customer experience throughout the entire process, from registering as a user, browsing products, and all the way through order delivery. Users can place orders and leave reviews, while Moderators and Admins control what goes on the site, update products, orders, and keep track of users and inventory. 
