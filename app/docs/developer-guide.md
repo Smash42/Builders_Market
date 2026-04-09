@@ -25,22 +25,22 @@
 
 # Local Development Setup <a name="local-dvp"></a>
 ## Clone:
--	In the terminal input the following code to clone the repository
+####	In the terminal input the following code to clone the repository
 * 	git clone “insert code https url”
 * 	cd “folder-name”
--	Using GitHub Desktop
-o	Sign into GitHub, go to File > Clone Repository
-o	Select Buider’s_Market from your list, or paste the URL
-o	Choose the local path and select Clone
+####	Using GitHub Desktop
+* 	Sign into GitHub, go to File > Clone Repository
+* 	Select Buider’s_Market from your list, or paste the URL
+* 	Choose the local path and select Clone
 
 ## Configure:
 -	To install the virtual environment, follow the instructions on https://flask.palletsprojects.com/en/stable/installation/#install-flask 
 -	In the terminal or command prompt of the project folder
-o	Windows:  
+####	Windows:  
 * 	py -3 -m venv .venv 
 * 	.venv\Scripts\activate 
 * 	inside .venv: pip install Flask
-o	Mac/Linux:
+####	Mac/Linux:
 * 	python3 -m venv .venv
 -	Install dependencies: pip install -r requirements.txt
 
@@ -69,9 +69,9 @@ o	Mac/Linux:
 Client uses the Browser (Templates Folder)  →  Flask Routes (Blueprints) →  Models (database logic) →  SQLite Database
 1.	User Interacts with the Browser (GUI) form or button
 2.	Request hits the corresponding Flask Route from Routes folder 
-a.	i.e.  /products, /orders, /product/2, etc.
+* 	i.e.  /products, /orders, /product/2, etc.
 3.	Route calls a model pending the function. 
-a.	i.e. ProductItem.GetAll() for the product browse page (/products), ProductItem.GetByID(product_ID) for product details page (/products/2),  Order.GetAll() for my orders page (/orders), etc.
+* 	i.e. ProductItem.GetAll() for the product browse page (/products), ProductItem.GetByID(product_ID) for product details page (/products/2),  Order.GetAll() for my orders page (/orders), etc.
 4.	Model queries the database (The query varies based on what each function in a model calls) 
 5.	Data is returned to the route (i.e. return ProductItem.FromDB(product_id))
 6.	Route renders template with the appropriate data
