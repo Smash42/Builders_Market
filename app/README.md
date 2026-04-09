@@ -6,19 +6,55 @@
     This was developed to create a smooth and seamless customer experience throughout the entire process from registering as a user, browsing products, and all the way through order delivery.
     Users can place order, and leave reviews, while Moderator and Admin control what goes on the site, update products, orders, and keep track of users and inventory. 
 
+# Technologies Used: 
+* Front end framework: HTML/CSS 
+* Backend Framework: We are utilizing Flask 
+* Language: Python
+* Database: SQLite
+* Security: Flask Sessions, Password Hashing, QR Code generater, TOTP 2FA
+
+# Quick Start Guide
+* Prerequisites: Python 3.12, Flask, SQLite
+* Clone the Repository: 
+- git clone "url for repository"
+- cd builders_market
+
+* Virtual Environment and Install Dependencies: In the project's terminal run: 
+- python -m venv .venv
+- .venv\Scripts\activate (on Windows) 
+- pip install -r requirements.txt
+- pip install pyotp qrcode
+
+* Set environment Variable
+- Create .env file with the following information
+- SECRET_KEY = your_secret_key
+- FLASK_APP = app.py
+- FLASK_ENV = development
+
+* Initialize Database
+- In your terminal: flask init-db
+- ** If not in app folder and in the main builders_market folder use this instead: flask --app app init-db
+
+* Start Server: 
+- In terminal: python app.py , Once the server starts select the URL given to begin viewing the app
+
+# Document Links
+* User Guide: docs/user-guide.md
+* Developer Guide: docs/
+* API Reference:  docs/api-reference.md
+* Troubleshooting: docs/troubleshooting.md
+
+# Licenses
+* Educational Use only
+* There are no licenses associated with this 
+________
 # Setup, Start Server, View Site Instructions: 
         **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
         ** Should app be in the main folder then please disregard the above. 
- * Setup:
-  python -m venv .venv
-  .venv\Scripts\activate (on Windows)
-  pip install -r requirements.txt
-  pip install pyotp qrcode
-* Prerequisites: Python 3.12.5, Flask, SQLite  
-* Install dependencies: pip install -r requirements.txt
+
 * How to configure database credentials: Database settings are stored in config/config.py
 * How to initialize the database schema: In new terminal: flask init-db **If not in app folder : flask --app app init-db
-*     
+ 
 ## How to start the server and View the Site: 
 * In terminal: python app.py , Once the server starts select the URL given to begin viewing the app 
 * If you are using my already initialized database: 
@@ -196,11 +232,7 @@ _______
 * All browsers are able to be used for viewing of Builder's Market. I have not ran into any issues or limitations
 
 
-# Technologies Used: 
-* Front end framework: HTML/CSS 
-* Backend Framework: We are utilizing Flask 
-* Language: Python
-* Database: SQLite
+
 
 
 # Project Structure: Folder organization
