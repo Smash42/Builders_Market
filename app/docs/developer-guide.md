@@ -82,7 +82,6 @@ Client uses the Browser (Templates Folder)  →  Flask Routes (Blueprints) →  
 -	If you’re in the app folder terminal run: flask init-db
 -	If you’re in the Builders_Market folder terminal run: flask --app app init-db
 
--	Database setup — run migrations, and load sample data
 
 # Running Tests <a name="test"></a>
 -	In terminal run: 
