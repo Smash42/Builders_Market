@@ -2,6 +2,10 @@
 
 # Table of Content
 1. [Authentication Routes](#auth-route)
+2. [CRUD Routes](#crud-routes)
+3. [Admin/Moderator Dashboard](#admin)
+4. [Other Routes](#other)
+
 
 ## Authentication Routes <a name="auth-route"></a>
 1)	User Registration- POST
@@ -12,7 +16,7 @@
 * 	Request: Body: {“username”: “John Smith”, “email”: “testing123@test.com”, “password”:”plainTextPassword”} 
 * 	Response: Returns JSON success or error message. 
 Success 201: {“success”: true, “user_id”: 2, “username”: “John Smith”, “email”: “testing123@test.com”, “password”:”plainTextPassword”} 
-Error 400: {“success”: false, “error”: “Validation Error”, “details”: {“username”: “Username must be valid, and unique”,  “email”: “Email must be valid and unique”, “password”: “Password must include a capital letter, number, special character, and be 10 characters long”}
+Error 400: {“success”: false, “error”: “Validation Error”, “details”: {“username”: “Username must be valid, and unique”,  “email”: “Email must be valid and unique”, “password”: “Password must include a capital letter, number, special character, and be 10 characters long”} }
 * 	Status Code: 201- created, 400- Bad request, 404- Page not found, 500- Server Error
 
 2)	User Login- POST
@@ -103,7 +107,7 @@ Success 200: {“success”: true, “data”: { “username”: “John Smith�
 Error 401: {“success”: false, “error”: “User is not authenticated”}
 * 	Status Code: 200- OK, 401- Unauthorized, 404- Page not found, 500- Server Error
 
-## CRUD Routes
+## CRUD Routes <a name="crud-routes"></a>
 10)	Product Add (create)- POST
 * 	/api/products
 * 	Create a new product for inventory
@@ -248,7 +252,7 @@ Error 401: {“success”: false, “error”: “User is not authenticated”}
 Error 403: {“success”: false, “error”: “User does not have permission to create an order”}
 * 	Status Code: 201-Created, 401- Unauthorized, 403- Forbidden, 400-Validation Error, 404- Page not found, 500- Server Error
 
-## Admin/Moderator Dashboard
+## Admin/Moderator Dashboard <a name="admin"></a>
 22)	View All users- GET
 * 	/api/admin/users
 * 	Description: View all authenticated users. Only accessed by admin users.
@@ -375,8 +379,8 @@ Success 200 OK- { “success”: true, “data”: [ {“permission_name”: “
 Error 401: {“success”: false, “error”: “User is not authenticated”}
 Error 403: {“success”: false, “error”: “User does not have permission to view all permissions”}
 * 	Status Code: 200-OK, 401- Unauthorized, 403- Forbidden, 404- Page not found, 500- Server Error
-
-## Other Routes
+ 
+## Other Routes <a name="other"></a>
 32)	Add Category- POST
 * 	/api/category
 * 	Description: Create a new category
