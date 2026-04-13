@@ -16,7 +16,7 @@
 # Quick Start Guide
 * Prerequisites: Python 3.12, Flask, SQLite
 * Clone the Repository: 
-- git clone "url for repository"
+- git clone "insert url for repository here"
 - cd builders_market
 
 * Virtual Environment and Install Dependencies: In the project's terminal run: 
@@ -48,6 +48,7 @@
 * Educational Use only
 * There are no licenses associated with this 
 ________
+
 # Setup, Start Server, View Site Instructions: 
         **IF you are opening from "Builder's Market" Folder, when using the terminal, all .txt AND .py need to be written as app/___.py or app/___.txt
         ** Should app be in the main folder then please disregard the above. 

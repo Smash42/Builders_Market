@@ -4,6 +4,7 @@ from flask import Blueprint, app, flash, g, redirect, render_template, request, 
 from auth.auths import require_auth
 from models.users import User
 import logging
+
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth_bp.route('/register', methods=['GET','POST'])

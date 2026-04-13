@@ -82,12 +82,15 @@ Client uses the Browser (Templates Folder)  →  Flask Routes (Blueprints) →  
 -	If you’re in the app folder terminal run: flask init-db
 -	If you’re in the Builders_Market folder terminal run: flask --app app init-db
 
+## Sample Data
+* Sample data is already present in the database at initialization since it is incorporated via the schema file. 
 
 # Running Tests <a name="test"></a>
 -	In terminal run: 
 * 	pip install pytest
 * 	python -m pytest
 -	If all passes than the app is working properly
+##### Tests are located in the test_app.py file in tests folder
 
 # Deployment Guide <a name="deploy"></a>
 -	In terminal run: 

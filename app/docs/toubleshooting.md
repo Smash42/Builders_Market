@@ -63,9 +63,9 @@ Resolution:
 Resolution: 
 1.	If you believe you should have access to this contact Admin for support
 2.	Admin should:
-a.	Go to Role Details
-b.	Update correct permissions for that role
-c.	Ensure the user has the correct role
+* 1. Go to Role Details
+* 2. *Update correct permissions for that role
+* 3. Ensure the user has the correct role
 
 ## Page Not Found
 	Cause: 
